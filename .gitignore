@@ -1,5 +1,6 @@
 /deployments/
 /.openshift/
+
 *.log
 
 #JBDS
@@ -19,7 +20,5 @@
 /src/main/webapp/index.html
 
 #ignore thumbnails created by windows
-Thumbs.db
-
-
 src/main/webapp/index.html
+Thumbs.db
