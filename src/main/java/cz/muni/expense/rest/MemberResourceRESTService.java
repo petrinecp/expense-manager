@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.tools.examples.rest;
+package cz.muni.expense.rest;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,9 +41,9 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jboss.tools.examples.data.MemberRepository;
-import org.jboss.tools.examples.model.Member;
-import org.jboss.tools.examples.service.MemberRegistration;
+import cz.muni.expense.data.MemberRepository;
+import cz.muni.expense.model.Member;
+import cz.muni.expense.service.MemberRegistration;
 
 /**
  * JAX-RS Example

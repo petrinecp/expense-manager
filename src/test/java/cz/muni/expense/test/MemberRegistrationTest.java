@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.tools.examples.test;
+package cz.muni.expense.test;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -24,9 +24,9 @@ import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.tools.examples.model.Member;
-import org.jboss.tools.examples.service.MemberRegistration;
-import org.jboss.tools.examples.util.Resources;
+import cz.muni.expense.model.Member;
+import cz.muni.expense.service.MemberRegistration;
+import cz.muni.expense.util.Resources;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.tools.examples.data;
+package cz.muni.expense.data;
 
 import java.util.LinkedList;
 import javax.annotation.PostConstruct;
@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-import org.jboss.tools.examples.model.Member;
+import cz.muni.expense.model.Member;
 
 @RequestScoped
 public class MemberListProducer {

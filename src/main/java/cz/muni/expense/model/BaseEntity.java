@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.tools.examples.model;
+package cz.muni.expense.model;
 
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;

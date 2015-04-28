@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.tools.examples.service;
+package cz.muni.expense.service;
 
-import org.jboss.tools.examples.model.Member;
+import cz.muni.expense.model.Member;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;

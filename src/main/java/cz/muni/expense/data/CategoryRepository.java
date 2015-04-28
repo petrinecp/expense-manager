@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.tools.examples.data;
+package cz.muni.expense.data;
 
 import javax.ejb.Stateless;
-import org.jboss.tools.examples.model.Category;
+import cz.muni.expense.model.Category;
 
 /**
  *

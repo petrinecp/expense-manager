@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.tools.examples.rest;
+package cz.muni.expense.rest;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
 import javax.ws.rs.Path;
-import org.jboss.tools.examples.data.CategoryRepository;
-import org.jboss.tools.examples.model.Category;
+import cz.muni.expense.data.CategoryRepository;
+import cz.muni.expense.model.Category;
 
 /**
  *

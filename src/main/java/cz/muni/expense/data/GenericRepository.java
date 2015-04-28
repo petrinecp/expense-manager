@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.tools.examples.data;
+package cz.muni.expense.data;
 
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import org.jboss.tools.examples.model.BaseEntity;
+import cz.muni.expense.model.BaseEntity;
 
 /**
  *

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.tools.examples.controller;
+package cz.muni.expense.controller;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -23,11 +23,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.jboss.tools.examples.data.CategoryRepository;
-import org.jboss.tools.examples.model.Category;
-
-import org.jboss.tools.examples.model.Member;
-import org.jboss.tools.examples.service.MemberRegistration;
+import cz.muni.expense.data.CategoryRepository;
+import cz.muni.expense.model.Category;
+import cz.muni.expense.model.Member;
+import cz.muni.expense.service.MemberRegistration;
 
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
 // EL name

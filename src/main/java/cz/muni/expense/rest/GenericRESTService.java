@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.tools.examples.rest;
+package cz.muni.expense.rest;
 
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -14,8 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.jboss.tools.examples.data.GenericRepository;
-import org.jboss.tools.examples.model.BaseEntity;
+import cz.muni.expense.data.GenericRepository;
+import cz.muni.expense.model.BaseEntity;
 
 /**
  *
