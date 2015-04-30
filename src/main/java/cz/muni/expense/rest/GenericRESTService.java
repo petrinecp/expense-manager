@@ -24,7 +24,7 @@ import cz.muni.expense.model.BaseEntity;
  */
 public abstract class GenericRESTService<T extends BaseEntity> {
 
-    private GenericRepository<T> repository;
+    protected GenericRepository<T> repository;
 
     protected void setRepository(GenericRepository<T> repository) {
         this.repository = repository;

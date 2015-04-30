@@ -6,6 +6,7 @@
 package cz.muni.expense.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,6 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Peter Petrinec
  */
 @Entity
+@Table(name = "Categories")
 public class Category extends BaseEntity<Long>{
     
     @NotNull

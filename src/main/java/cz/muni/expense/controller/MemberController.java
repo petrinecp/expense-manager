@@ -55,7 +55,7 @@ public class MemberController {
 
     public void register() throws Exception {
         Category c = new Category();
-        c.setTitle("first category");
+        c.setTitle("áčšřťľĺúäôňďťňľéě");
         categoryRepository.create(c);
         int a = 2;
 //        try {
