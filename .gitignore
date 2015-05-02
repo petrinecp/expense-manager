@@ -1,3 +1,20 @@
-/target/
 /deployments/
 /.openshift/
+*.log
+
+#JBDS
+/target/
+/.settings/
+.project
+
+#Angular
+/src/main/webapp/angular/node/
+/src/main/webapp/angular/node_modules/
+/src/main/webapp/angular/build/
+/src/main/webapp/angular/docs/
+/src/main/webapp/angular/app/libs
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+

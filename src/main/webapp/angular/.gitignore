@@ -1,0 +1,5 @@
+# ignore
+node/
+node_modules/
+build/
+docs/
