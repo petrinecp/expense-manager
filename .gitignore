@@ -12,7 +12,6 @@
 /src/main/webapp/angular/node_modules/
 /src/main/webapp/angular/build/
 /src/main/webapp/angular/docs/
-/src/main/webapp/angular/app/libs
 
 #ignore thumbnails created by windows
 Thumbs.db
