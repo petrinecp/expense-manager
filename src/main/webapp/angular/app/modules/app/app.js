@@ -12,7 +12,10 @@ angular.module('app', [
     'item',
     'item-new',
     'items',
-    'overlay'
+    'overlay',
+    'users',
+    'user',
+    'user-new',
 ])
 
     .config(['$stateProvider', function ($stateProvider) {
@@ -36,12 +39,14 @@ angular.module('app', [
         $scope.loggedIn = false;
         $scope.navbarCollapsed = true;
         $scope.username = 'admin';
+        $scope.userrole = 'admin';
+        
 
         $scope.login = function () {
             $scope.data.get({section: 'users', id: $scope.username}, function (data) {
                 $rootScope.user = data;
                 $scope.loggedIn = true;
-                $state.go('items');
+                $state.go('users');
             });
         };
         

@@ -1,0 +1,38 @@
+/**
+ * User
+ * @class user styling
+ */
+
+.user {
+
+}
+
+.user img {
+    max-width: 100%;
+}
+
+.user .nav-tabs a {
+    cursor: pointer;
+}
+
+.user .section {
+    clear: both;
+}
+
+.user timecode {
+    margin: 0 1% 10px 0;
+    width: 48%;
+    float: left;
+}
+
+.user timecode input,
+.user timecode .divider {
+    display: inline-block;
+    width: 22%;
+    text-align: center;
+    border: none;
+}
+
+.user timecode .divider {
+    width: 3%;
+}

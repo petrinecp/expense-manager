@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app.e2e">
 <head>
     <meta charset="utf-8" />
     <meta name="description" content="" />
@@ -22,11 +22,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Angular Bootstrap</a>
+                <a class="navbar-brand" href="index.html">Expense Manger</a>
             </div>
             <div class="collapse navbar-collapse" collapse="navbarCollapsed">
                 <ul class="nav navbar-nav" ng-show="loggedIn">
                     <li ui-sref-active="active"><a ui-sref="items">Items</a></li>
+                    <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
                     <li ng-show="!navbarCollapsed"><a ui-sref="overlay">My Profile</a></li>
                     <li ng-show="!navbarCollapsed"><a href ng-click="logout()">Logout</a></li>
                 </ul>
@@ -57,5 +58,9 @@
     <script src="modules/item-new/item-new.js"></script>
     <script src="modules/items/items.js"></script>
     <script src="modules/overlay/overlay.js"></script>
+    
+    <script src="modules/userManagement/user/user.js"></script>
+    <script src="modules/userManagement/users/users.js"></script>
+    <script src="modules/userManagement/user-new/user-new.js"></script>
 </body>
 </html>
