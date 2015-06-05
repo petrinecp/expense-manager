@@ -5,7 +5,7 @@
 
 /*globals window, angular, document */
 
-angular.module('app', [
+var app = angular.module('app', [
     'ngResource',
     'ui.router',
     'ui.bootstrap',
@@ -16,6 +16,9 @@ angular.module('app', [
     'users',
     'user',
     'user-new',
+    'category',
+    'category-new',
+    'categories'
 ])
 
     .config(['$stateProvider', function ($stateProvider) {
@@ -56,7 +59,96 @@ angular.module('app', [
             $state.go('app');
         };
     }])
+    
+    
 
+    .factory('GeneralRestServiceOLD',
+		[ '$rootScope', '$resource', function($rootScope, $resource) {
+			//return $resource('/expense-manager/rest/:section', null, {
+			return $resource('rest/:section', null, {
+				'get': { method: 'GET', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' },
+                'post': { method: 'POST', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section' },
+                'query': { method: 'GET', isArray: true, params: { section: '@section' } }
+			});
+		} ])
+
+	.factory('GeneralRestService', ['$rootScope', '$resource', function ($rootScope, $resource) {
+        'use strict';
+        return {
+            resource: $resource('rest/:section', null, {
+                get: { method: 'GET', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' },
+                post: { method: 'POST', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section' },
+                query: { method: 'GET', isArray: true, params: { section: '@section', id: '@id' } }
+            }),
+            /**
+             * @method get
+             * Single item
+             */
+            get: function (params, callback, error) {
+                var me = this;
+                //console.log('get', params);
+                me.resource.get(params, null, function (value) {
+                    me.setData(value, params.section, params.id);
+                    if (callback) { callback(value); }
+                }, error);
+            },
+            /**
+             * @method post
+             * Submit data
+             */
+            post: function (params, callback, error) {
+                var me = this;
+                //console.log('post', params);
+                me.resource.post(params, me.getData(params.section, params.id), function (value) {
+                    //me.setData(value, params.section, params.id); // do not save post data
+                    if (callback) { callback(value); }
+                }, error);
+            },
+            /**
+             * @method query
+             * List of items
+             */
+            query: function (params, callback, error) {
+                var me = this;
+                //console.log('query', params);
+                me.resource.query(params, null, function (value) {
+                    me.setData(value, params.section, params.id);
+                    if (callback) { callback(value); }
+                }, error);
+            },
+            /**
+             * @method setData
+             * Cache the items for sharing between controllers
+             */
+            setData: function (value, section, id) {
+                if (typeof id === 'number') {
+                    if (!this[section + '_detail']) {
+                        this[section + '_detail'] = {};
+                    }
+                    this[section + '_detail'][id] = value;
+                } else {
+                    this[section] = value;
+                }
+            },
+            /**
+             * @method getData
+             * Get cached data object
+             */
+            getData: function (section, id) {
+                if (typeof id === 'number') {
+                    if (id === 0) {
+                        return this[section + '_new'];
+                    } else {
+                        return this[section + '_detail'][id];
+                    }
+                } else {
+                    return this[section];
+                }
+            }
+        };
+    }])
+    
+    
     .factory('Data', ['$rootScope', '$resource', function ($rootScope, $resource) {
         'use strict';
         return {

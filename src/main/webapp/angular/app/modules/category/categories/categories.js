@@ -1,57 +1,56 @@
 /**
- * @module Users
- * @summary Users module
+ * @module categories
+ * @summary categories module
  */
 
 /* globals window, angular, document */
 
-angular.module('users', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
+angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 
 .config([ '$stateProvider', function($stateProvider) {
 	'use strict';
 
-	$stateProvider.state('users', {
-		url : '/users',
+	$stateProvider.state('categories', {
+		url : '/categories',
 		views : {
 			'main@' : {
-				templateUrl : 'modules/userManagement/users/users.html'
+				templateUrl : 'modules/category/categories/categories.html'
 			}
 		}
-	}).state('users.new', {
+	}).state('category.new', {
 		url : '/new',
 		views : {
-			'sidebar@users' : {
-				templateUrl : 'modules/userManagement/user-new/user-new.html',
-				controller : 'user-new'
+			'sidebar@categories' : {
+				templateUrl : 'modules/category/category-new/category-new.html',
+				controller : 'category-new'
 			}
 		}
-	}).state('users.view', {
+	}).state('category.view', {
 		url : '/:id',
 		views : {
-			'sidebar@users' : {
-				templateUrl : 'modules/userManagement/user/user.html',
-				controller : 'user'
+			'sidebar@categories' : {
+				templateUrl : 'modules/category/category/category.html',
+				controller : 'category'
 			}
 		}
 	});
 } ])
 
 .controller(
-		'users',
+		'categories',
 		[ '$scope', '$stateParams', '$filter', 'GeneralRestService', '$log',
 				function($scope, $stateParams, $filter, GeneralRestService, $log) {
 					'use strict';
 
 					$scope.filters = {
-						name : '',
-						role : ''
+						title : ''
 					};
 
 					$scope.currentPage = 1;
 					$scope.pageSize = 10;
 					$scope.data = GeneralRestService;
 					$scope.data.query({
-						section : 'members'
+						section : 'category'
 					});
 					
 			        //refresh users list
@@ -72,10 +71,9 @@ angular.module('users', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 
 					$scope.test = function() {
 						$scope.data.query({
-							section : 'members'
+							section : 'category'
 						});
 						$log.info($scope.data);
-						$log.info($scope.data.query);
 					};
 
 				} ])

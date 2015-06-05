@@ -1,0 +1,25 @@
+/**
+ * Users
+ * @class users
+ */
+
+.users {
+
+}
+
+.users .title h1 {
+    display: inline-block;
+}
+
+.users .title .btn,
+.users .title .form-control {
+    margin-top: 25px;
+}
+
+.users .filters .active {
+    color: #000;
+}
+
+.users .filters .btn {
+    margin-bottom: 5px;
+}

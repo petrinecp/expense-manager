@@ -2,14 +2,13 @@
  * Gulp tasks
  * @file gulpfile
  */
-
 /*globals require, console*/
 
 var gulp = require('gulp'),
     karma = require('gulp-karma'),
     jsdoc = require('gulp-jsdoc'),
     concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
+    //uglify = require('gulp-uglify'),
     rebaseUrls = require('gulp-css-rebase-urls'),
     minifyCSS = require('gulp-minify-css'),
     del = require('del'),
@@ -68,35 +67,35 @@ gulp.task('compile', ['clean'], function () {
     
     gulp.src('./app/index-build.html')
         .pipe(rename('index.html'))
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('../'));
     
     gulp.src('./app/modules/**/*.html')
-        .pipe(gulp.dest('./build/modules'));
+        .pipe(gulp.dest('../modules'));
     
     gulp.src('./app/data/**/*')
-        .pipe(gulp.dest('./build/data'));
+        .pipe(gulp.dest('../data'));
     
     gulp.src('./app/img/**/*')
-        .pipe(gulp.dest('./build/img'));
+        .pipe(gulp.dest('../img'));
     
     gulp.src('./app/libs/**/*')
-        .pipe(gulp.dest('./build/libs'));
+        .pipe(gulp.dest('../libs'));
     
     gulp.src('./app/modules/**/*.js')
         .pipe(concat('app.min.js'))
-        .pipe(uglify()) // angular module have to been written in the correct format https://docs.angularjs.org/tutorial/step_05
-        .pipe(gulp.dest('./build/modules'));
+        // .pipe(uglify()) // angular module have to been written in the correct format https://docs.angularjs.org/tutorial/step_05
+        .pipe(gulp.dest('../modules'));
 
     gulp.src('./app/modules/**/*.css')
         .pipe(rebaseUrls({root: './app/css'}))
         .pipe(concat('app.min.css'))
         .pipe(minifyCSS())
-        .pipe(gulp.dest('./build/modules'));
+        .pipe(gulp.dest('../modules'));
 });
 
 gulp.task('clean', function (cb) {
     'use strict';
-    del(['./build/'], cb);
+    del(['../index.html','../data/**/*','../img/**/*','../libs/**/*','../modules/**/*' ],{force: true}, cb);
 });
 
 gulp.task('watch', function () {

@@ -1,0 +1,21 @@
+<div class="category-new">
+    <button type="button" class="close" ui-sref="categories"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h1>New category</h1>
+    
+    <form role="form">
+        <fieldset ng-disabled="isDisabled">
+            <accordion close-others="true">
+                <accordion-group is-open="accordianOpen1">
+                    <accordion-heading>
+                    Enter details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordianOpen1, 'glyphicon-chevron-right': !accordianOpen1}"></i>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" ng-model="data.category_new.title" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
+                </accordion-group>
+            </accordion>
+        </fieldset>
+    </form>
+</div>

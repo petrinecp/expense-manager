@@ -205,6 +205,15 @@
 				<!-- optional -->
 				<configuration>
 					<workingDirectory>src/main/webapp/angular</workingDirectory>
+
+					<!-- For M2Eclipse integration, should executes incremental build after 
+						changes -->
+					<srcdir>${basedir}/src/main/webapp/angular/app</srcdir>
+					<outputdir>${project.build.directory}/expense-manager/</outputdir>
+					<triggerfiles>
+						<triggerfile>gulpfile.js</triggerfile>
+						<triggerfile>package.json</triggerfile>
+					</triggerfiles>
 				</configuration>
 
 				<executions>
@@ -229,7 +238,7 @@
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
-					
+
 					<execution>
 						<id>gulp build</id>
 						<goals>

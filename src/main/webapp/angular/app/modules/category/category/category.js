@@ -5,10 +5,10 @@
 
 /*globals window, angular, document */
 
-angular.module('user', [
+angular.module('category', [
     'ui.router'
 ])
-    .controller('user', ['$rootScope', '$scope', '$stateParams', 'DataFromServer', function ($rootScope, $scope, $stateParams, DataFromServer) {
+    .controller('category', ['$rootScope', '$scope', '$stateParams', 'DataFromServer', function ($rootScope, $scope, $stateParams, DataFromServer) {
         'use strict';
         
         $scope.data = DataFromServer;

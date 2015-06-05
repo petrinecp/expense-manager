@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app.mocked">
 <head>
     <meta charset="utf-8" />
     <meta name="description" content="" />
@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="modules/item-new/item-new.css" />
     <link rel="stylesheet" href="modules/items/items.css" />
     <link rel="stylesheet" href="modules/overlay/overlay.css" />
-    
-    <link rel="stylesheet" href="modules/category/category/category.css" />
-    <link rel="stylesheet" href="modules/category/category-new/category-new.css" />
-    <link rel="stylesheet" href="modules/category/categories/categories.css" />
 </head>
 <body class="app" ng-controller="app">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -32,7 +28,6 @@
                 <ul class="nav navbar-nav" ng-show="loggedIn">
                     <li ui-sref-active="active"><a ui-sref="items">Items</a></li>
                     <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
-                    <li ui-sref-active="active"><a ui-sref="categories">Categories</a></li>
                     <li ng-show="!navbarCollapsed"><a ui-sref="overlay">My Profile</a></li>
                     <li ng-show="!navbarCollapsed"><a href ng-click="logout()">Logout</a></li>
                 </ul>
@@ -58,6 +53,7 @@
     <script src="libs/angular/angular-resource.js"></script>
     <script src="libs/angular-ui/angular-ui-bootstrap.min.js"></script>
     <script src="libs/angular-ui/angular-ui-router.min.js"></script>
+    <script src="../test/mocks/expenseManagerBackendMock.js"></script>
     <script src="modules/app/app.js"></script>
     <script src="modules/item/item.js"></script>
     <script src="modules/item-new/item-new.js"></script>
@@ -67,9 +63,8 @@
     <script src="modules/userManagement/user/user.js"></script>
     <script src="modules/userManagement/users/users.js"></script>
     <script src="modules/userManagement/user-new/user-new.js"></script>
-        
-    <script src="modules/category/category/category.js"></script>
-    <script src="modules/category/categories/categories.js"></script>
-    <script src="modules/category/category-new/category-new.js"></script>
+    
+    <script src="libs/angular/angular-mocks.js"></script>
+    
 </body>
 </html>
