@@ -16,6 +16,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import cz.muni.expense.data.GenericRepository;
 import cz.muni.expense.model.BaseEntity;
+import cz.muni.expense.model.Category;
+import java.net.URI;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
@@ -24,6 +30,9 @@ import cz.muni.expense.model.BaseEntity;
  */
 public abstract class GenericRESTService<T extends BaseEntity> {
 
+    @Context
+    UriInfo uriInfo;
+    
     protected GenericRepository<T> repository;
 
     protected void setRepository(GenericRepository<T> repository) {
@@ -46,7 +55,16 @@ public abstract class GenericRESTService<T extends BaseEntity> {
         }
         return t;
     }
-
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)  
+    public Response create(T entity) {
+        T e = repository.create(entity);
+        URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
+        return Response.created(createdUri).entity(e).build();
+    }
+    
     @DELETE
     @Path("/{id:[0-9][0-9]*}")
     public Response deleteById(@PathParam("id") long id) {
