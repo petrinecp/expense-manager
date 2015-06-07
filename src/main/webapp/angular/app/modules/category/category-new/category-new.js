@@ -1,6 +1,6 @@
 /**
- * @module user new
- * @summary user new module
+ * @module category new
+ * @summary category new module
  */
 
 /*globals window, angular, document */
@@ -8,13 +8,10 @@
 angular.module('category-new', [
     'ui.router'
 ])
-    .controller('category-new', ['$scope', '$state', 'Data', function ($scope, $state, Data) {
+    .controller('category-new', ['$scope', '$state', 'GeneralRestService', function ($scope, $state, GeneralRestService) {
         'use strict';
         
-        $scope.data = Data;
-        $scope.data.users_new = {
-            date: new Date()
-        };
+        $scope.data = GeneralRestService;
         $scope.accordianOpen1 = true;
         $scope.accordianOpen2 = false;
 
@@ -22,6 +19,7 @@ angular.module('category-new', [
             $scope.isDisabled = true;
             $scope.data.post({section: 'category', id: 0}, function (data) {
                 $scope.isDisabled = false;
+                $scope.data.category.push(data);
                 $state.go('categories');
             });
         };

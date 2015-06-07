@@ -1,6 +1,6 @@
 /**
- * @module user
- * @summary user module
+ * @module category
+ * @summary category module
  */
 
 /*globals window, angular, document */
@@ -8,17 +8,17 @@
 angular.module('category', [
     'ui.router'
 ])
-    .controller('category', ['$rootScope', '$scope', '$stateParams', 'DataFromServer', function ($rootScope, $scope, $stateParams, DataFromServer) {
+    .controller('category', ['$rootScope', '$scope', '$stateParams', 'GeneralRestService', '$state', function ($rootScope, $scope, $stateParams, GeneralRestService, $state) {
         'use strict';
         
-        $scope.data = DataFromServer;
+        $scope.data = GeneralRestService;
         $scope.editable = false;
         $scope.num = false;
         
-        if ($stateParams.id) {
+    	if ($stateParams.id) {
             $rootScope.id = Number($stateParams.id);
-            $scope.data.get({section: 'user', id: $rootScope.id}, function (data) {
-                $scope.user = data;
+            $scope.data.get({section: 'category', id: $rootScope.id}, function (data) {
+                $scope.category = data;
             });
         }
         
@@ -28,9 +28,25 @@ angular.module('category', [
         
         $scope.save = function () {
             $scope.isDisabled = true;
-            $scope.data.post({section: 'user', id: $rootScope.id}, function (data) {
+            $scope.data.update({section: 'category', id: $rootScope.id}, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = false;
+                $state.go('categories');
+                $scope.data.query({
+					section : 'category'
+				});
+            });
+        };
+        
+        $scope.remove = function () {
+            $scope.isDisabled = true;
+            $scope.data.remove({section: 'category', id: $rootScope.id}, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = false;
+                $state.go('categories');
+                $scope.data.query({
+					section : 'category'
+				});
             });
         };
         

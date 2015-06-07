@@ -17,7 +17,7 @@ angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 				templateUrl : 'modules/category/categories/categories.html'
 			}
 		}
-	}).state('category.new', {
+	}).state('categories.new', {
 		url : '/new',
 		views : {
 			'sidebar@categories' : {
@@ -25,7 +25,7 @@ angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 				controller : 'category-new'
 			}
 		}
-	}).state('category.view', {
+	}).state('categories.view', {
 		url : '/:id',
 		views : {
 			'sidebar@categories' : {
@@ -49,33 +49,18 @@ angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 					$scope.currentPage = 1;
 					$scope.pageSize = 10;
 					$scope.data = GeneralRestService;
-					$scope.data.query({
-						section : 'category'
-					});
 					
-			        //refresh users list
-//			        $scope.refreshUsers = function () {
-//			        	$scope.data.query({section : 'members'},
-//			                    function (data, status, headers, config) {
-//			        				$scope.data.query = data;
-//			                        $log.info("List of users loaded.");
-//			                    }, function (data, status, headers, config) {
-//			                $log.error("An error occurred on server! List of users cannot be loaded.");
-//			            });
-//			        };
-//			        $scope.refreshCities();
-
-					$scope.filter = function(key, value) {
-						$scope.filters[key] = value;
-					};
-
-					$scope.test = function() {
+					$scope.refresh = function() {
 						$scope.data.query({
 							section : 'category'
 						});
-						$log.info($scope.data);
 					};
 
+					$scope.refresh();
+					
+					$scope.filter = function(key, value) {
+						$scope.filters[key] = value;
+					};
 				} ])
 
 

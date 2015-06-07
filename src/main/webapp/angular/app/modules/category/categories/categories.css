@@ -1,25 +1,25 @@
 /**
- * Users
- * @class users
+ * categories
+ * @class categories
  */
 
-.users {
+.categories {
 
 }
 
-.users .title h1 {
+.categories .title h1 {
     display: inline-block;
 }
 
-.users .title .btn,
-.users .title .form-control {
+.categories .title .btn,
+.categories .title .form-control {
     margin-top: 25px;
 }
 
-.users .filters .active {
+.categories .filters .active {
     color: #000;
 }
 
-.users .filters .btn {
+.categories .filters .btn {
     margin-bottom: 5px;
 }

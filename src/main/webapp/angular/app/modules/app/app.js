@@ -16,9 +16,9 @@ var app = angular.module('app', [
     'users',
     'user',
     'user-new',
+    'categories',
     'category',
-    'category-new',
-    'categories'
+    'category-new'
 ])
 
     .config(['$stateProvider', function ($stateProvider) {
@@ -38,6 +38,7 @@ var app = angular.module('app', [
     .controller('app', ['$rootScope', '$scope', '$state', 'Data', function ($rootScope, $scope, $state, Data) {
         'use strict';
         
+        $scope.$state = $state;
         $scope.data = Data;
         $scope.loggedIn = false;
         $scope.navbarCollapsed = true;
@@ -59,18 +60,6 @@ var app = angular.module('app', [
             $state.go('app');
         };
     }])
-    
-    
-
-    .factory('GeneralRestServiceOLD',
-		[ '$rootScope', '$resource', function($rootScope, $resource) {
-			//return $resource('/expense-manager/rest/:section', null, {
-			return $resource('rest/:section', null, {
-				'get': { method: 'GET', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' },
-                'post': { method: 'POST', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section' },
-                'query': { method: 'GET', isArray: true, params: { section: '@section' } }
-			});
-		} ])
 
 	.factory('GeneralRestService', ['$rootScope', '$resource', function ($rootScope, $resource) {
         'use strict';
@@ -78,7 +67,9 @@ var app = angular.module('app', [
             resource: $resource('rest/:section', null, {
                 get: { method: 'GET', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' },
                 post: { method: 'POST', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section' },
-                query: { method: 'GET', isArray: true, params: { section: '@section', id: '@id' } }
+                query: { method: 'GET', isArray: true, params: { section: '@section', id: '@id' } },
+                update: { method: 'POST', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' },
+                remove: { method: 'DELETE', isArray: false, params: { section: '@section', id: '@id' }, url: 'rest/:section/:id' }
             }),
             /**
              * @method get
@@ -100,6 +91,30 @@ var app = angular.module('app', [
                 var me = this;
                 //console.log('post', params);
                 me.resource.post(params, me.getData(params.section, params.id), function (value) {
+                    //me.setData(value, params.section, params.id); // do not save post data
+                    if (callback) { callback(value); }
+                }, error);
+            },
+            /**
+             * @method update
+             * Update data (send post to address <url>/<id>)
+             */
+            update: function (params, callback, error) {
+                var me = this;
+                //console.log('post', params);
+                me.resource.update(params, me.getData(params.section, params.id), function (value) {
+                    //me.setData(value, params.section, params.id); // do not save post data
+                    if (callback) { callback(value); }
+                }, error);
+            },
+            /**
+             * @method remove
+             * Delete data (send "delete" to address <url>/<id>)
+             */
+            remove: function (params, callback, error) {
+                var me = this;
+                //console.log('delete', params);
+                me.resource.remove(params, null, function (value) {
                     //me.setData(value, params.section, params.id); // do not save post data
                     if (callback) { callback(value); }
                 }, error);

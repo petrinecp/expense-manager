@@ -65,6 +65,16 @@ public abstract class GenericRESTService<T extends BaseEntity> {
         return Response.created(createdUri).entity(e).build();
     }
     
+    @POST
+    @Path("/{id:[0-9][0-9]*}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)  
+    public Response update(T entity) {
+        T e = repository.update(entity);
+        URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
+        return Response.created(createdUri).entity(e).build();
+    }
+    
     @DELETE
     @Path("/{id:[0-9][0-9]*}")
     public Response deleteById(@PathParam("id") long id) {
