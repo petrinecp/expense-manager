@@ -1,9 +1,13 @@
 package cz.muni.expense.parser;
 
 import cz.muni.expense.enums.BankIdentifier;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 /**
  * POJO to automatically map payments history upload form into this class
@@ -12,29 +16,22 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
  */
 public class PaymentUploadForm {
     
-    @FormParam("bank")
-    @PartType(MediaType.TEXT_PLAIN)
-    private String bank;
+    private BankIdentifier bankIdentifier;
+    private List<byte[]> sources = new LinkedList<>();
+
+    public PaymentUploadForm(BankIdentifier bankIdentifier) {
+        this.bankIdentifier = bankIdentifier;
+    }
+
+    public void addSource(byte[] source) {
+        sources.add(source);
+    }
     
-    @FormParam("file")
-    @PartType(MediaType.APPLICATION_OCTET_STREAM)
-    private byte[] file;
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
     public BankIdentifier getBankIdentifier() {
-        return BankIdentifier.valueOf(bank);
+        return bankIdentifier;
     }
 
-    public void setBankIdentifier(String bank) {
-        this.bank = bank;
+    public List<byte[]> getSources() {
+        return sources;
     }
-    
-    
 }

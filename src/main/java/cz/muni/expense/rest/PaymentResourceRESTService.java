@@ -2,6 +2,7 @@ package cz.muni.expense.rest;
 
 import cz.muni.expense.data.BankRepository;
 import cz.muni.expense.data.PaymentRepository;
+import cz.muni.expense.enums.BankIdentifier;
 import cz.muni.expense.exception.ParserException;
 import cz.muni.expense.model.Bank;
 import cz.muni.expense.model.Payment;
@@ -11,7 +12,12 @@ import cz.muni.expense.parser.PaymentUploadForm;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
@@ -21,6 +27,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.util.GenericType;
 
 /**
  *
@@ -53,26 +62,61 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadPaymentsHistory(@MultipartForm PaymentUploadForm input) {
+    public Response uploadPaymentsHistory(MultipartFormDataInput input) {
         Response.ResponseBuilder builder = null;
-        Bank bank = bankRepository.findByIdentifier(input.getBankIdentifier());
 
-        try (InputStream stream = new ByteArrayInputStream(input.getFile())) {
-            Parser parser = parserFactory.getParser(input.getBankIdentifier());
-            List<Payment> payments = parser.parse(stream);
-            for (Payment p : payments) {
-                p.setBank(bank);
-                repository.create(p);
+        try {
+            PaymentUploadForm form = processInput(input);
+            BankIdentifier identifier = form.getBankIdentifier();
+            Bank bank = bankRepository.findByIdentifier(identifier);
+            Parser parser = parserFactory.getParser(identifier);
+
+            List<byte[]> sources = form.getSources();
+            List<Future<List<Payment>>> payments = new LinkedList<>();
+
+            // run ansynchronous parsing
+            for (byte[] data : sources) {
+                try (InputStream stream = new ByteArrayInputStream(data)) {
+                    payments.add(parser.parse(stream));
+                } catch (ParserException ex) {
+                    // failed to parse data
+                }
             }
+            
+            for (Future<List<Payment>> payment : payments) {
+                for (Payment p : payment.get()) {
+                    p.setBank(bank);
+                    repository.create(p);
+                }
+            }
+            
             builder = Response.ok();
-        } catch (IllegalArgumentException ex) {
-            builder = Response.status(Response.Status.BAD_REQUEST);
         } catch (IOException ex) {
-            builder = Response.status(Response.Status.BAD_REQUEST);
+            Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
+            //wrong params or types
         } catch (ParserException ex) {
-            builder = Response.status(Response.Status.BAD_REQUEST);
+            Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return builder.build();
+    }
+
+    private PaymentUploadForm processInput(MultipartFormDataInput input) throws IOException {
+        String bank = input.getFormDataPart("bank", new GenericType<String>() {});
+        BankIdentifier identifier = BankIdentifier.valueOf(bank);
+        List<InputPart> fileInputParts = input.getFormDataMap().get("file");
+
+        PaymentUploadForm form = new PaymentUploadForm(identifier);
+        for (InputPart part : fileInputParts) {
+            byte[] data = part.getBody(new GenericType<byte[]>() {
+            });
+            form.addSource(data);
+        }
+
+        return form;
     }
 }

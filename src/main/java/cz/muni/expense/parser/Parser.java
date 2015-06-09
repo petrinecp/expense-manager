@@ -9,11 +9,12 @@ import cz.muni.expense.exception.ParserException;
 import cz.muni.expense.model.Payment;
 import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  *
  * @author Peter Petrinec
  */
 public interface Parser {
-    List<Payment> parse(InputStream stream) throws ParserException;
+    Future<List<Payment>> parse(InputStream stream) throws ParserException;
 }

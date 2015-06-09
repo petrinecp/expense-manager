@@ -22,5 +22,5 @@ public class CategoryResourceRESTService extends GenericRESTService<Category>{
     public CategoryResourceRESTService() {
         CategoryRepository repository = CDI.current().select(CategoryRepository.class).get();
         this.setRepository(repository);
-    }    
+    }
 }

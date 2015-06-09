@@ -15,8 +15,11 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,7 +38,8 @@ import org.xml.sax.SAXException;
 public class CsobXmlParser implements Parser {
 
     @Override
-    public List<Payment> parse(InputStream stream) throws ParserException {
+    @Asynchronous
+    public Future<List<Payment>> parse(InputStream stream) throws ParserException {
         List<Payment> payments = new LinkedList<>();
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -69,7 +73,8 @@ public class CsobXmlParser implements Parser {
             throw new ParserException("Failed to parse the file.", ex);
         }
 
-        return payments;
+        System.out.println("");
+        return new AsyncResult<>(payments);
     }
 
 }
