@@ -8,20 +8,18 @@
 angular.module('user-new', [
     'ui.router'
 ])
-    .controller('user-new', ['$scope', '$state', 'Data', function ($scope, $state, Data) {
+    .controller('user-new', ['$scope', '$state', 'GeneralRestService', function ($scope, $state, GeneralRestService) {
         'use strict';
         
-        $scope.data = Data;
-        $scope.data.users_new = {
-            date: new Date()
-        };
+        $scope.data = GeneralRestService;
         $scope.accordianOpen1 = true;
         $scope.accordianOpen2 = false;
 
         $scope.save = function () {
             $scope.isDisabled = true;
-            $scope.data.post({section: 'users', id: 0}, function (data) {
+            $scope.data.post({section: 'user', id: 0}, function (data) {
                 $scope.isDisabled = false;
+				$scope.data.user.push(data);
                 $state.go('users');
             });
         };

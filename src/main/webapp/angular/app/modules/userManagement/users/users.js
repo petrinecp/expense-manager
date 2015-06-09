@@ -44,38 +44,24 @@ angular.module('users', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 
 					$scope.filters = {
 						name : '',
-						role : ''
+						forname: '',
+						//role : ''
 					};
 
 					$scope.currentPage = 1;
 					$scope.pageSize = 10;
 					$scope.data = GeneralRestService;
-					$scope.data.query({
-						section : 'members'
-					});
-					
-			        //refresh users list
-//			        $scope.refreshUsers = function () {
-//			        	$scope.data.query({section : 'members'},
-//			                    function (data, status, headers, config) {
-//			        				$scope.data.query = data;
-//			                        $log.info("List of users loaded.");
-//			                    }, function (data, status, headers, config) {
-//			                $log.error("An error occurred on server! List of users cannot be loaded.");
-//			            });
-//			        };
-//			        $scope.refreshCities();
+
+					$scope.refresh = function() {
+						$scope.data.query({
+							section : 'user'
+						});
+					};
+
+					$scope.refresh();
 
 					$scope.filter = function(key, value) {
 						$scope.filters[key] = value;
-					};
-
-					$scope.test = function() {
-						$scope.data.query({
-							section : 'members'
-						});
-						$log.info($scope.data);
-						$log.info($scope.data.query);
 					};
 
 				} ])

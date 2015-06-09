@@ -11,12 +11,16 @@
                     </accordion-heading>
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" ng-model="data.users_new.name" />
+                        <input type="text" class="form-control" id="name" ng-model="data.user_new.name" />
                     </div>
                     <div class="form-group">
-                        <label for="description">Role</label>
-                        <textarea class="form-control" id="description" ng-model="data.users_new.role"></textarea>
+                        <label for="forname">Forname</label>
+                        <input class="form-control" id="forname" ng-model="data.user_new.forname"></input>
                     </div>
+                    <!-- div class="form-group">
+                        <label for="role">Role</label>
+                        <input class="form-control" id="role" ng-model="data.user_new.role"></input>
+                    </div-->
                     <button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
                 </accordion-group>
             </accordion>

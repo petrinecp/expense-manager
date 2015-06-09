@@ -8,10 +8,10 @@
 angular.module('user', [
     'ui.router'
 ])
-    .controller('user', ['$rootScope', '$scope', '$stateParams', 'DataFromServer', function ($rootScope, $scope, $stateParams, DataFromServer) {
+    .controller('user', ['$rootScope', '$scope', '$stateParams', 'GeneralRestService', '$state', function ($rootScope, $scope, $stateParams, GeneralRestService, $state) {
         'use strict';
         
-        $scope.data = DataFromServer;
+        $scope.data = GeneralRestService;
         $scope.editable = false;
         $scope.num = false;
         
@@ -28,9 +28,25 @@ angular.module('user', [
         
         $scope.save = function () {
             $scope.isDisabled = true;
-            $scope.data.post({section: 'user', id: $rootScope.id}, function (data) {
+            $scope.data.update({section: 'user', id: $rootScope.id}, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = false;
+				$state.go('users');
+                $scope.data.query({
+					section : 'user'
+				});
+            });
+        };
+
+        $scope.remove = function () {
+            $scope.isDisabled = true;
+            $scope.data.remove({section: 'user', id: $rootScope.id}, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = false;
+                $state.go('users');
+                $scope.data.query({
+					section : 'user'
+				});
             });
         };
         

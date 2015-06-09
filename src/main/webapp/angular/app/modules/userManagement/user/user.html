@@ -6,29 +6,41 @@
             <h3>Details</h3>
             <div class="view" ng-show="!editable">
                 <dl>
+					<dt>Id</dt>
+                    <dd>{{ user.id || 'None' }}</dd>
                     <dt>Name</dt>
                     <dd>{{ user.name || 'None' }}</dd>
-                    <dt>Role</dt>
-                    <dd>{{ user.role || 'None' }}</dd>
+                    <dt>Forname</dt>
+                    <dd>{{ user.forname || 'None' }}</dd>
+                    <!-- dt>Role</dt>
+                    <dd>{{ user.role || 'None' }}</dd-->
                 </dl>
             </div>
             <form role="form" ng-show="editable">
                 <fieldset ng-disabled="isDisabled">
                     <div class="form-group">
+						<dt>Id</dt>
+                    	<dd>{{ user.id || 'None' }}</dd>
+					</div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" ng-model="user.name" />
                     </div>
                     <div class="form-group">
-                        <label for="description">Role</label>
-                        <textarea class="form-control" id="description" ng-model="user.role"></textarea>
+                        <label for="forname">Forname</label>
+                        <input class="form-control" id="forname" ng-model="user.forname"></input>
                     </div>
+                    <!-- div class="form-group">
+                        <label for="role">Role</label>
+                        <input class="form-control" id="role" ng-model="user.role"></input>
+                    </div-->
                 </fieldset>
             </form>
         </tab>
     </tabset>
     <div class="controls">
-        <button type="button" class="btn btn-default" ng-click="edit()" ng-show="!editable">Edit</button>
-        <button type="submit" class="btn btn-primary" ng-click="save()" ng-show="editable">Save</button>
+        <button type="button" class="btn btn-primary" ng-click="edit()" ng-show="!editable">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="remove()" ng-show="!editable">Delete</button>
+        <button type="submit" class="btn btn-success" ng-click="save()" ng-show="editable">Save</button>
     </div>
 </div>

@@ -16,6 +16,7 @@
         <div class="row title">
             <div class="col-xs-8">
                 <h1>Users</h1>
+				<a class="btn btn-primary pull-right" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a>
                 <a ui-sref="users.new" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>New user</a>
             </div>
             <div class="col-xs-4">
@@ -26,21 +27,25 @@
             <thead>
                 <tr>
                     <th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Id</a></th>
-                    <th class="col-md-6"><a href="" ng-click="predicate='name';reverse=!reverse">Name</a></th>
-                    <th class="col-md-3"><a href="" ng-click="predicate='role';reverse=!reverse">Role</a></th>
+                    <th class="col-md-5"><a href="" ng-click="predicate='name';reverse=!reverse">Name</a></th>
+                    <th class="col-md-3"><a href="" ng-click="predicate='forname';reverse=!reverse">Forname</a></th>
+                    <!-- th class="col-md-3"><a href="" ng-click="predicate='role';reverse=!reverse">Role</a></th-->
+					<th class="col-md-1"><a href="" ng-click="predicate='title';reverse=!reverse">Detail</a></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user in filtered = (data.users | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==user.id}">
+                <tr ng-repeat="user in filtered = (data.user | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==user.id}">
                     <td>{{ user.id || 'None' }}</td>
                     <td><a ui-sref="users.view({id:user.id})">{{ user.name || 'None' }}</a></td>
-                    <td>{{ user.role || 'None' }}</td>
+                    <td>{{ user.forname || 'None' }}</td>
+                    <!-- td>{{ user.role || 'None' }}</td-->
+					<td><a ui-sref="users.view({id:user.id})">Detail</a></td>
                 </tr>
             </tbody>
         </table>
-        <a href ng-click="test()">TEST!!!</a>
         <p>Total items: {{ filtered.length }} </p>
         <p>Filtered items: {{ filtered }} </p>
+        <p>All items: {{ data.user }} </p>
         <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
     </div>
 </div>
