@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedList;
@@ -20,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
+import javax.ejb.Stateless;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,6 +33,7 @@ import org.xml.sax.SAXException;
  *
  * @author Peter Petrinec
  */
+@Stateless
 @ParserType(bank = BankIdentifier.CSOB, format = FileFormat.XML)
 public class CsobXmlParser implements Parser {
 
@@ -73,8 +73,6 @@ public class CsobXmlParser implements Parser {
             throw new ParserException("Failed to parse the file.", ex);
         }
 
-        System.out.println("");
         return new AsyncResult<>(payments);
     }
-
 }

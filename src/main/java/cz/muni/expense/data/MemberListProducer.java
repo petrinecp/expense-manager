@@ -16,7 +16,6 @@
  */
 package cz.muni.expense.data;
 
-import java.util.LinkedList;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
@@ -50,7 +49,6 @@ public class MemberListProducer {
 
     @PostConstruct
     public void retrieveAllMembersOrderedByName() {
-        //members = memberRepository.findAllOrderedByName();
-        members = new LinkedList<>();
+        members = memberRepository.findAllOrderedByName();
     }
 }

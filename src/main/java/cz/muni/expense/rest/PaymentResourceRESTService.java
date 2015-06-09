@@ -73,16 +73,18 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
 
             List<byte[]> sources = form.getSources();
             List<Future<List<Payment>>> payments = new LinkedList<>();
-
-            // run ansynchronous parsing
+            
+            // Run ansynchronous parsing
             for (byte[] data : sources) {
                 try (InputStream stream = new ByteArrayInputStream(data)) {
                     payments.add(parser.parse(stream));
                 } catch (ParserException ex) {
-                    // failed to parse data
+                    // Failed to parse data
+                    Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             
+            // Save collected payments from the files to database
             for (Future<List<Payment>> payment : payments) {
                 for (Payment p : payment.get()) {
                     p.setBank(bank);
