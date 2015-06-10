@@ -199,66 +199,7 @@
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>${version.wildfly.maven.plugin}</version>
 			</plugin>
-			<!-- frontend-maven-plugin execute gulp and build angular application -->
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>0.0.23</version>
 
-				<!-- optional -->
-				<configuration>
-					<workingDirectory>src/main/webapp/angular</workingDirectory>
-
-					<!-- For M2Eclipse integration, should executes incremental build after 
-						changes -->
-					<srcdir>${basedir}/src/main/webapp/angular/app</srcdir>
-					<outputdir>${project.build.directory}/expense-manager/</outputdir>
-					<triggerfiles>
-						<triggerfile>gulpfile.js</triggerfile>
-						<triggerfile>package.json</triggerfile>
-					</triggerfiles>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>v0.12.2</nodeVersion>
-							<npmVersion>2.9.0</npmVersion>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<!-- Optional configuration which provides for running any npm command -->
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>gulp build</id>
-						<goals>
-							<goal>gulp</goal>
-						</goals>
-
-						<!-- optional: the default phase is "generate-resources" -->
-						<phase>generate-resources</phase>
-
-						<configuration>
-							<!-- optional: if not specified, it will run Grunt's default task 
-								(and you can remove this whole <configuration> section.) -->
-							<arguments>compile</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -337,6 +278,73 @@
 							<outputDirectory>deployments</outputDirectory>
 							<warName>ROOT</warName>
 						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>frontend-build</id>
+			<build>
+				<plugins>
+					<!-- frontend-maven-plugin execute gulp and build angular application -->
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>0.0.23</version>
+
+						<!-- optional -->
+						<configuration>
+							<workingDirectory>src/main/webapp/angular</workingDirectory>
+
+							<!-- For M2Eclipse integration, should executes incremental build 
+								after changes -->
+							<srcdir>${basedir}/src/main/webapp/angular/app</srcdir>
+							<outputdir>${basedir}/expense-manager/</outputdir>
+							<triggerfiles>
+								<triggerfile>gulpfile.js</triggerfile>
+								<triggerfile>package.json</triggerfile>
+							</triggerfiles>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v0.12.2</nodeVersion>
+									<npmVersion>2.9.0</npmVersion>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<!-- Optional configuration which provides for running any npm command -->
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>gulp build</id>
+								<goals>
+									<goal>gulp</goal>
+								</goals>
+
+								<!-- optional: the default phase is "generate-resources" -->
+								<phase>generate-resources</phase>
+
+								<configuration>
+									<!-- optional: if not specified, it will run Grunt's default task 
+										(and you can remove this whole <configuration> section.) -->
+									<arguments>compile</arguments>
+								</configuration>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
