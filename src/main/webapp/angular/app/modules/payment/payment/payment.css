@@ -1,0 +1,38 @@
+/**
+ * payment
+ * @class payment styling
+ */
+
+.payment {
+
+}
+
+.payment img {
+    max-width: 100%;
+}
+
+.payment .nav-tabs a {
+    cursor: pointer;
+}
+
+.payment .section {
+    clear: both;
+}
+
+.payment timecode {
+    margin: 0 1% 10px 0;
+    width: 48%;
+    float: left;
+}
+
+.payment timecode input,
+.payment timecode .divider {
+    display: inline-block;
+    width: 22%;
+    text-align: center;
+    border: none;
+}
+
+.payment timecode .divider {
+    width: 3%;
+}

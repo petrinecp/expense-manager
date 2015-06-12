@@ -18,7 +18,10 @@ var app = angular.module('app', [
     'user-new',
     'categories',
     'category',
-    'category-new'
+    'category-new',
+    'payments',
+    'payment',
+    'payment-new'
 ])
 
     .config(['$stateProvider', function ($stateProvider) {

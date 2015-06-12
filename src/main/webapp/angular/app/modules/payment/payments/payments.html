@@ -1,0 +1,57 @@
+<div class="row payments" ng-controller="payments">
+    <div class="col-md-4 col-md-push-8">
+        <div ui-view="sidebar">
+            <div class="filters">
+                <h1>Filters</h1>
+                <!-- h4>Roles</h4>
+                <p>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role==''}" ng-click="filter('role', '')">All</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='admin'}" ng-click="filter('role', 'admin')">Admin</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='user'}" ng-click="filter('role', 'user')">User</a>
+                </p-->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-pull-4">
+        <div class="row title">
+            <div class="col-xs-8">
+                <h1>Payments</h1>
+                <a class="btn btn-primary pull-right" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a>
+                <a ui-sref="payments.new" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>New payment</a>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="filters.title" placeholder="Search" ng-change="currentPage=1" />
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                	<th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Id</a></th>
+                    <th class="col-md-1"><a href="" ng-click="predicate='user';reverse=!reverse">User</a></th>
+                    <th class="col-md-1"><a href="" ng-click="predicate='bank';reverse=!reverse">Bank</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='paymentDate';reverse=!reverse">Payment date</a></th>
+                    <th class="col-md-1"><a href="" ng-click="predicate='amount';reverse=!reverse">Amount</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='infoForReceiver1';reverse=!reverse">Info for receiver 1</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='infoForReceiver2';reverse=!reverse">Info for receiver 2</a></th>
+                    <th class="col-md-1"><a href="">Detail</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="payment in filtered = (data.payment | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==payment.id}">
+                    <td>{{ payment.id || 'None' }}</td>
+                    <td>{{ payment.user.name || 'None' }}</td>
+                    <td>{{ payment.bank.title || 'None' }}</td>
+                    <td>{{ payment.paymentDate || 'None' }}</td>
+                    <td>{{ payment.amount || 'None' }}</td>
+                    <td>{{ payment.infoForReceiver1 || 'None' }}</td>
+                    <td>{{ payment.infoForReceiver2 || 'None' }}</td>
+                    <td><a ui-sref="payments.view({id:payment.id})">Detail</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Total items: {{ filtered.length }} </p>
+        <p>All items: {{ data }} </p>
+        <p>Filtered items: {{ filtered }} </p>
+        <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
+    </div>
+</div>

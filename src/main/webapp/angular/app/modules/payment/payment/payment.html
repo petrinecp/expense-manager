@@ -1,0 +1,66 @@
+<div class="payment">
+    <button type="button" class="close" ui-sref="payments"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h1>Payment</h1>
+    <tabset justified="false">
+        <tab heading="Details">
+            <h3>Details</h3>
+            <div class="view" ng-show="!editable">
+                <dl>
+                	<dt>Id</dt>
+                    <dd>{{ payment.id || 'None' }}</dd>
+                    <dt>Bank</dt>
+                    <dd>{{ payment.bank.title || 'None' }}</dd>
+                    <dt>Payment date</dt>
+                    <dd>{{ payment.paymentDate || 'None' }}</dd>
+                    <dt>Amount</dt>
+                    <dd>{{ payment.amount || 'None' }}</dd>
+                    <dt>Info for receiver 1</dt>
+                    <dd>{{ payment.infoForReceiver1 || 'None' }}</dd>
+                    <dt>Info for receiver 2</dt>
+                    <dd>{{ payment.infoForReceiver2 || 'None' }}</dd>
+                </dl>
+            </div>
+            <form role="form" ng-show="editable">
+                <fieldset ng-disabled="isDisabled">
+                	<div class="form-group">
+                        <dt>Id</dt>
+                    	<dd>{{ payment.id || 'None' }}</dd>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Bank</label>
+                        <select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="payment.bank">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Payment date</label>                        
+                        <p class="input-group">
+				            <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy"  is-open="datePicker.isOpen" ng-model="payment.paymentDate" />
+				            <span class="input-group-btn">
+				            	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+				            </span>
+			            </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Amount</label>
+                        <input type="text" class="form-control" id="amount" ng-model="payment.amount" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Info for receiver 1</label>
+                        <input type="text" class="form-control" id="infoForReceiver1" ng-model="payment.infoForReceiver1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Info for receiver 2</label>
+                        <input type="text" class="form-control" id="infoForReceiver2" ng-model="payment.infoForReceiver2" />
+                    </div>
+                </fieldset>
+            </form>
+        </tab>
+    </tabset>
+    <div class="controls">
+    	<button type="button" class="btn btn-primary" ng-click="edit()" ng-show="!editable">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="remove()" ng-show="!editable">Delete</button>
+        <button type="submit" class="btn btn-success" ng-click="save()" ng-show="editable">Save</button>
+    </div>
+    <p>Payment: {{ payment }}</p>
+    <p>Payment ID: {{ payment.id }}</p>
+</div>
