@@ -2,6 +2,7 @@
 /.openshift/
 
 *.log
+log.txt
 
 #JBDS
 /target/
