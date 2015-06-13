@@ -1,0 +1,25 @@
+/**
+ * payments
+ * @class payments
+ */
+
+.payments {
+
+}
+
+.payments .title h1 {
+    display: inline-block;
+}
+
+.payments .title .btn,
+.payments .title .form-control {
+    margin-top: 25px;
+}
+
+.payments .filters .active {
+    color: #000;
+}
+
+.payments .filters .btn {
+    margin-bottom: 5px;
+}

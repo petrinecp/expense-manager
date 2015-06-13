@@ -1,0 +1,44 @@
+<div class="payment-new">
+    <button type="button" class="close" ui-sref="payments"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h1>New payment</h1>
+    
+    <form role="form">
+        <fieldset ng-disabled="isDisabled">
+            <accordion close-others="true">
+                <accordion-group is-open="accordianOpen1">
+                    <accordion-heading>
+                    Enter details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordianOpen1, 'glyphicon-chevron-right': !accordianOpen1}"></i>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <label for="bank">Bank</label>
+                        	<select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentDate">Payment date</label>
+                        <p class="input-group">
+				            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"  is-open="datePicker.isOpen" ng-model="data.payment_new.paymentDate" />
+				            <span class="input-group-btn">
+				            	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+				            </span>
+			            </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="text" class="form-control" id="amount" ng-model="data.payment_new.amount" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">infoForReceiver1</label>
+                        <input type="text" class="form-control" id="infoForReceiver1" ng-model="data.payment_new.infoForReceiver1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">infoForReceiver2</label>
+                        <input type="text" class="form-control" id="infoForReceiver2" ng-model="data.payment_new.infoForReceiver2" />
+                    </div>                    
+                    
+                    <button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
+                </accordion-group>
+            </accordion>
+        </fieldset>
+    </form>
+</div>
