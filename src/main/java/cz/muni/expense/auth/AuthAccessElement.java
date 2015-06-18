@@ -1,3 +1,5 @@
+package cz.muni.expense.auth;
+
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -1,3 +1,5 @@
+package cz.muni.expense.auth;
+
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;

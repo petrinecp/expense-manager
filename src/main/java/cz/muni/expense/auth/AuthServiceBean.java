@@ -1,3 +1,5 @@
+package cz.muni.expense.auth;
+
 
 import cz.muni.expense.data.UserRepository;
 import cz.muni.expense.model.User;
