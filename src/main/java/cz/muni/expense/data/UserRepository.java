@@ -20,5 +20,9 @@ public class UserRepository extends GenericRepository<User> {
     public UserRepository() {
         super(User.class);
     }
+    
+    public User findByUsernameAndPassword(String username, String password){
+        return new User();
+    }
     	
 }

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package cz.muni.expense.model;
 
 import java.util.List;
@@ -25,7 +30,11 @@ public class User extends BaseEntity<Long> {
     @Size(min = 1, max = 25)
     @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     private String forname;
-    
+    private String username;
+    private String passwd;
+    private String authToken;
+    private String authRole;
+
     public String getName() {
         return name;
     }
@@ -40,5 +49,37 @@ public class User extends BaseEntity<Long> {
 
     public void setForname(String forname) {
         this.forname = forname;
+    }    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public String getAuthRole() {
+        return authRole;
+    }
+
+    public void setAuthRole(String authRole) {
+        this.authRole = authRole;
     }
 }
