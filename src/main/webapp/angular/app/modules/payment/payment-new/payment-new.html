@@ -38,6 +38,25 @@
                     
                     <button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
                 </accordion-group>
+                
+                
+                
+                 <accordion-group is-open="accordianOpen2">
+                    <accordion-heading>
+                    Import payments <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordianOpen2, 'glyphicon-chevron-right': !accordianOpen2}"></i>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <label for="bank">Bank</label>
+                        	<select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentsXmlFile">XML file</label>
+                        <input type="file" class="form-control" id="paymentsXmlFile" name="file" multiple/>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" ng-click="upload()">Import files</button>
+                </accordion-group>
             </accordion>
         </fieldset>
     </form>

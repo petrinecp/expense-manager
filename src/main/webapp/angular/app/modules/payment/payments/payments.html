@@ -3,12 +3,12 @@
         <div ui-view="sidebar">
             <div class="filters">
                 <h1>Filters</h1>
-                <!-- h4>Roles</h4>
+                <h4>Bank</h4>
                 <p>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role==''}" ng-click="filter('role', '')">All</a>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='admin'}" ng-click="filter('role', 'admin')">Admin</a>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='user'}" ng-click="filter('role', 'user')">User</a>
-                </p-->
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.bank.title==''}" ng-click="filter('bank.title', '')">All</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.bank.title=='CSOB'}" ng-click="filter('bank.title', 'CSOB')">CSOB</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.bank.title=='CSAS'}" ng-click="filter('bank.title', 'CSAS')">CSAS</a>
+                </p>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
                 <a ui-sref="payments.new" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>New payment</a>
             </div>
             <div class="col-xs-4">
-                <input type="text" class="form-control" ng-model="filters.title" placeholder="Search" ng-change="currentPage=1" />
+                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1" />
             </div>
         </div>
         <table class="table table-striped">

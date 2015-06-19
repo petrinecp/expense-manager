@@ -43,7 +43,6 @@ angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 					'use strict';
 
 					$scope.filters = {
-						title : ''
 					};
 
 					$scope.currentPage = 1;

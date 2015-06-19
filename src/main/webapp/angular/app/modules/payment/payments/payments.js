@@ -43,6 +43,9 @@ angular.module('payments', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 					'use strict';
 
 					$scope.filters = {
+							'bank': {
+								'title': ''
+							}
 					};
 
 					$scope.currentPage = 1;
@@ -58,7 +61,12 @@ angular.module('payments', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 					$scope.refresh();
 					
 					$scope.filter = function(key, value) {
-						$scope.filters[key] = value;
+						if(key == 'bank.title'){
+							$scope.filters.bank.title = value;
+						} else {
+							$scope.filters[key] = value;
+						}
+						$log.debug("Filters: "+$scope.filters);
 					};
 				} ])
 
