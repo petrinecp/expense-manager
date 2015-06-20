@@ -5,30 +5,34 @@
  */
 package cz.muni.expense.rest;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import cz.muni.expense.data.GenericRepository;
 import cz.muni.expense.model.BaseEntity;
-import cz.muni.expense.model.Category;
-import java.net.URI;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 
 /**
  *
  * @author Peter Petrinec
  * @param <T>
  */
-public abstract class GenericRESTService<T extends BaseEntity> {
+public abstract class GenericRESTService<T extends BaseEntity>{
 
     @Context
     UriInfo uriInfo;
@@ -89,5 +93,10 @@ public abstract class GenericRESTService<T extends BaseEntity> {
         }
         
         return builder.build();
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
