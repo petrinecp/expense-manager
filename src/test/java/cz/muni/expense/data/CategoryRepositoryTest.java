@@ -35,7 +35,7 @@ public class CategoryRepositoryTest {
 		return ShrinkWrap.create(WebArchive.class, "test.war")
 				.addPackages(true, "cz.muni.expense")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
-                .addAsResource("META-INF/test-import.sql", "import.sql")
+                //.addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
 	}
