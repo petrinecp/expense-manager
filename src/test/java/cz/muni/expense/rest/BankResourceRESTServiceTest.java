@@ -154,3 +154,4 @@ public class BankResourceRESTServiceTest {
         assertEquals("Bank should be deleted", 400, response.getStatus());
     }
 }
+
