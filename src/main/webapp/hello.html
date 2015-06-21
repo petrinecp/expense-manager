@@ -10,9 +10,8 @@
 	</div>
 	<div id="messages"></div>
 	<script type="text/javascript">
-		var webSocket = new WebSocket(
-				'ws://localhost:8080/expense-manager/websocket');
-
+		var webSocket = new WebSocket('ws://localhost:8080/expense-manager/websocket');
+		
 		webSocket.onerror = function(event) {
 			onError(event)
 		};

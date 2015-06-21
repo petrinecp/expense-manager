@@ -3,7 +3,6 @@ package cz.muni.expense.data;
 import javax.ejb.Stateless;
 
 import cz.muni.expense.model.Message;
-import cz.muni.expense.model.Statistics;
 
 /**
  * 

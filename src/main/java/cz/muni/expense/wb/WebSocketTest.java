@@ -1,4 +1,4 @@
-package cz.muni.expense.websocket;
+package cz.muni.expense.wb;
 
 import javax.inject.Inject;
 import javax.websocket.OnClose;
