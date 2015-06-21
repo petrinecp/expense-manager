@@ -38,5 +38,5 @@ public class User extends BaseEntity<Long> {
 
     public void setForname(String forname) {
         this.forname = forname;
-    }    
+    }
 }

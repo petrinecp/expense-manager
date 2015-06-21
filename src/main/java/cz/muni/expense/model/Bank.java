@@ -6,12 +6,9 @@
 package cz.muni.expense.model;
 
 import cz.muni.expense.enums.BankIdentifier;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,9 +20,6 @@ import javax.persistence.Table;
 public class Bank extends BaseEntity<Long> {
     
     private String title;
-       
-//    @OneToMany(mappedBy = "bank")
-//    private List<Payment> payments;
     
     @Enumerated(EnumType.STRING)
     private BankIdentifier identifier;
@@ -45,12 +39,4 @@ public class Bank extends BaseEntity<Long> {
     public void setIdentifier(BankIdentifier identifier) {
         this.identifier = identifier;
     }
-
-//    public List<Payment> getPayments() {
-//        return payments;
-//    }
-//
-//    public void setPayments(List<Payment> payments) {
-//        this.payments = payments;
-//    }
 }
