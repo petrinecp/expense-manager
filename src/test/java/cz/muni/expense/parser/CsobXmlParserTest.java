@@ -23,40 +23,40 @@ import cz.muni.expense.parser.CsobXmlParser;
 
 /**
  * Test class for testing CsobXmlParser functionality
- * 
+ *
  * @author Martin Drimal
  *
  */
 @RunWith(Arquillian.class)
 public class CsobXmlParserTest {
-	
-	@Deployment
+
+    @Deployment
     public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, "cz.muni.expense")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addPackages(true, "cz.muni.expense")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
-                .addAsResource("paymentCsob.xml", "paymentCsob.xml")
+                .addAsResource("paymentCSOB.xml", "paymentCSOB.xml")
                 .addAsResource("badPaymentCSOB.xml", "badPaymentCSOB.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
-	}	
-	
-	@Inject
+    }
+
+    @Inject
     Logger log;
-	
-	@Test
-	public void parserTest() throws Exception {
-		CsobXmlParser parser = new CsobXmlParser();
-		Future<List<Payment>> payments = parser.parse(CsobXmlParserTest.class.getClassLoader().getResourceAsStream("paymentCsob.xml"));
-		assertFalse("Parsed payments should not be empty.", payments.get().isEmpty());
+
+    @Test
+    public void parserTest() throws Exception {
+        CsobXmlParser parser = new CsobXmlParser();
+        Future<List<Payment>> payments = parser.parse(CsobXmlParserTest.class.getClassLoader().getResourceAsStream("paymentCSOB.xml"));
+        assertFalse("Parsed payments should not be empty.", payments.get().isEmpty());
         List<Payment> paymentList = payments.get();
         assertEquals("Expected payments size is 2.", 2, paymentList.size());
         log.info("CSOB payment xml was parsed successful.");
-	}
-	
-	@Test(expected=ParserException.class)
-	public void badInputParserTest() throws ParserException{
-			CsobXmlParser parser = new CsobXmlParser();
-			parser.parse(CsobXmlParserTest.class.getClassLoader().getResourceAsStream("badPaymentCSOB.xml"));
-	}
+    }
+
+    @Test(expected = ParserException.class)
+    public void badInputParserTest() throws ParserException {
+        CsobXmlParser parser = new CsobXmlParser();
+        parser.parse(CsobXmlParserTest.class.getClassLoader().getResourceAsStream("badPaymentCSOB.xml"));
+    }
 }
