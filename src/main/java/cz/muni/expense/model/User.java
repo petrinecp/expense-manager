@@ -1,6 +1,8 @@
 package cz.muni.expense.model;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "Users")
 public class User extends BaseEntity<Long> {
+    @OneToMany(mappedBy = "user")
+    private List<Rule> rules;
     
     @NotNull
     @Size(min = 1, max = 25)

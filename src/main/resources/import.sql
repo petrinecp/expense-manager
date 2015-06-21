@@ -8,3 +8,6 @@ insert into Categories (id, title) values (5, 'Bills')
 insert into Categories (id, title) values (6, 'Entertainment')
 insert into Categories (id, title) values (7, 'Shopping')
 insert into Banks (id, title, identifier) values (1, 'Československá obchodní banka', 'CSOB')
+
+insert into Rules (id, userId, categoryId, ruleString) values(1, 1, 1, 'omv');
+insert into Rules (id, userId, categoryId, ruleString) values(2, 1, 6, 'cinema');
