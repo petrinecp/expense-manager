@@ -3,7 +3,6 @@ package cz.muni.expense.rest;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;

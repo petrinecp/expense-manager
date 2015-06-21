@@ -22,8 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import cz.muni.expense.common.ObjectParser;
-import cz.muni.expense.enums.BankIdentifier;
-import cz.muni.expense.model.Bank;
 import cz.muni.expense.model.User;
 
 /**
