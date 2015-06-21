@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.expense.data;
 
 import javax.ejb.Stateless;
 import cz.muni.expense.model.Category;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -19,4 +16,10 @@ public class CategoryRepository extends GenericRepository<Category> {
         super(Category.class);
     }
     
+    public List<Category> listUserAndGlobalCategoriesByUserId(Long id) {
+        Query query = em.createQuery("SELECT c FROM Category c "
+                + "WHERE c.user.id = :userId OR c.user.id IS NULL");
+        query.setParameter("userId", id);
+        return query.getResultList();
+    }
 }
