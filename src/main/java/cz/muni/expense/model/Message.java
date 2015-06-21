@@ -1,38 +1,46 @@
 package cz.muni.expense.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Messages")
 public class Message extends BaseEntity<Long>{
 
-    private String name;
-    private String text;
+    private Date timestamp;
+    @ManyToOne
+    private User user;
+    private String action;
 
     public Message(){
     	super();
     }
-    
-    public Message(String name, String text) {
-    	super();
-        this.name = name;
-        this.text = text;
-    }
 
-    public void setName(String name) {
-		this.name = name;
-	}
-    
-    public String getName() {
-        return name;
-    }
-
-	public void setText(String text) {
-		this.text = text;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	public String getText() {
-        return text;
-    }
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+    
 }

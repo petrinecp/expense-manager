@@ -56,4 +56,8 @@ public class Rule extends BaseEntity<Long> {
     
     //</editor-fold>
     
+    @Override
+    public String toString(){
+    	return "Id:"+getId()+", ruleString:"+ruleString;
+    }
 }
