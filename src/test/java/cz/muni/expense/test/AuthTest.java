@@ -30,67 +30,80 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AuthTest {
-    
+
     @Deployment
     public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, "cz.muni.expense")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addPackages(true, "cz.muni.expense")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
-	}
-    
+    }
+
     private User defaultUser;
-	
-	@Inject
-	UserRepository repository;
-        
-        @Inject
-        AuthService service;
-	
-	@Before
-	public void prepareDB(){
-		List<User> users = repository.findAll();
-		for(User u : users){
-			repository.delete(u);
-		}
-		
-		defaultUser = new User();
-		defaultUser.setName("Jon Doe");
-		defaultUser.setForname("Will Smith");
-                defaultUser.setUsername("john");
-                defaultUser.setPasswd("passwd");
-		
-		repository.create(defaultUser);
-	}
-        
-        @Test
-	public void findByUsernameAndPasswordTest(){
-                User user = repository.findByUsernameAndPassword(
-                        defaultUser.getUsername(),
-                        defaultUser.getPasswd()
-                );
-		
-		assertEquals("Bad user name.", user.getName(), defaultUser.getName());
-		assertEquals("Bad user for name.", user.getForname(), defaultUser.getForname());
-	}
-        
-        @Test
-	public void loginTest(){
-            
-            AuthLoginElement authLogin = new AuthLoginElement(defaultUser.getUsername(), defaultUser.getPasswd());
-            
-            AuthAccessElement authAccess = service.login(authLogin);
-                User user = repository.findByUsernameAndPassword(
-                        defaultUser.getUsername(),
-                        defaultUser.getPasswd()
-                );
-		
-		assertEquals("Bad user name.", authLogin.getUsername(), authAccess.getAuthId());
-                
-                assertNotNull("aaa", authAccess.getAuthToken());
-		//assertEquals("Bad user for name.", authLogin.getUsername(), authAccess.getAuthToken());
-	}
-    
+
+    @Inject
+    UserRepository repository;
+
+    @Inject
+    AuthService service;
+
+    @Before
+    public void prepareDB() {
+        List<User> users = repository.findAll();
+        for (User u : users) {
+            repository.delete(u);
+        }
+
+        defaultUser = new User();
+        defaultUser.setName("Jon Doe");
+        defaultUser.setForname("Will Smith");
+        defaultUser.setUsername("john");
+        defaultUser.setPasswd("passwd");
+
+        repository.create(defaultUser);
+    }
+
+    @Test
+    public void findByUsernameAndPasswordTest() {
+        User user = repository.findByUsernameAndPassword(
+                defaultUser.getUsername(),
+                defaultUser.getPasswd()
+        );
+
+        assertEquals("Bad user name.", user.getName(), defaultUser.getName());
+        assertEquals("Bad user for name.", user.getForname(), defaultUser.getForname());
+    }
+
+    @Test
+    public void loginTest() {
+
+        AuthLoginElement authLogin = new AuthLoginElement(defaultUser.getUsername(), defaultUser.getPasswd());
+
+        AuthAccessElement authAccess = service.login(authLogin);
+        User user = repository.findByUsernameAndPassword(
+                defaultUser.getUsername(),
+                defaultUser.getPasswd()
+        );
+
+        assertEquals("Bad user name.", authLogin.getUsername(), authAccess.getAuthId());
+        assertNotNull("Auth token is null", authAccess.getAuthToken());
+    }
+
+    @Test
+    public void advancedLoginTest() {
+
+        AuthLoginElement authLogin = new AuthLoginElement(defaultUser.getUsername(), defaultUser.getPasswd());
+
+        AuthAccessElement authAccess = service.login(authLogin);
+        User user = repository.findByUsernameAndPassword(
+                defaultUser.getUsername(),
+                defaultUser.getPasswd()
+        );
+
+        assertEquals("Bad user name.", authLogin.getUsername(), authAccess.getAuthId());
+        assertNotNull("Auth token is null", authAccess.getAuthToken());
+    }
+
 }

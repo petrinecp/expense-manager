@@ -1,6 +1,7 @@
 package cz.muni.expense.auth;
 
 
+import cz.muni.expense.enums.UserRole;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,12 +23,12 @@ public class AuthAccessElement implements Serializable {
 
     private String authId;
     private String authToken;
-    private String authPermission;
+    private UserRole authPermission;
 
     public AuthAccessElement() {
     }
 
-    public AuthAccessElement(String authId, String authToken, String authPermission) {
+    public AuthAccessElement(String authId, String authToken, UserRole authPermission) {
         this.authId = authId;
         this.authToken = authToken;
         this.authPermission = authPermission;
@@ -52,11 +53,11 @@ public class AuthAccessElement implements Serializable {
         this.authToken = authToken;
     }
 
-    public String getAuthPermission() {
+    public UserRole getAuthPermission() {
         return authPermission;
     }
 
-    public void setAuthPermission(String authPermission) {
+    public void setAuthPermission(UserRole authPermission) {
         this.authPermission = authPermission;
     }
 }

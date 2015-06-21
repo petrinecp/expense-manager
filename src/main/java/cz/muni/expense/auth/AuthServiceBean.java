@@ -3,6 +3,7 @@ package cz.muni.expense.auth;
 
 import cz.muni.expense.data.UserRepository;
 import cz.muni.expense.model.User;
+import java.util.Set;
 import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,5 +33,15 @@ public class AuthServiceBean implements AuthService {
             return new AuthAccessElement(loginElement.getUsername(), user.getAuthToken(), user.getAuthRole());
         }
         return null;
+    }
+
+    @Override
+    public boolean isAuthorized(String authId, String authToken, Set<String> rolesAllowed) {
+        User user = userRepository.findByUsernameAndAuthToken(authId, authToken);
+        if (user != null) {
+            return rolesAllowed.contains(user.getAuthRole());
+        } else {
+            return false;
+        }
     }
 }

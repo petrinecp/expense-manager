@@ -5,6 +5,7 @@
  */
 package cz.muni.expense.model;
 
+import cz.muni.expense.enums.UserRole;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -33,7 +34,7 @@ public class User extends BaseEntity<Long> {
     private String username;
     private String passwd;
     private String authToken;
-    private String authRole;
+    private UserRole authRole;
 
     public String getName() {
         return name;
@@ -75,11 +76,11 @@ public class User extends BaseEntity<Long> {
         this.authToken = authToken;
     }
 
-    public String getAuthRole() {
+    public UserRole getAuthRole() {
         return authRole;
     }
 
-    public void setAuthRole(String authRole) {
+    public void setAuthRole(UserRole authRole) {
         this.authRole = authRole;
     }
 }
