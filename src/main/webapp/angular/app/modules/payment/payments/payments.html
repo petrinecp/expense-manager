@@ -20,7 +20,7 @@
                 <a ui-sref="payments.new" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>New payment</a>
             </div>
             <div class="col-xs-4">
-                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1" />
+                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1; refreshPaymentsChart()" />
             </div>
         </div>
         <table class="table table-striped">
@@ -49,9 +49,19 @@
                 </tr>
             </tbody>
         </table>
-        <p>Total items: {{ filtered.length }} </p>
+        <!-- p>Total items: {{ filtered.length }} </p>
         <p>All items: {{ data }} </p>
-        <p>Filtered items: {{ filtered }} </p>
+        <p>Filtered items: {{ filtered }} </p-->
         <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
+            	
+        
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="paymentsChart"></div>
+            </div>
+        </div>
+        
+        <a ng-click="prepareData();prepareLabels()">RefreshChart</a>
     </div>
 </div>
