@@ -10,9 +10,9 @@ import cz.muni.expense.model.Message;
  *
  */
 @Stateless
-public class MessagesRepository extends GenericRepository<Message>{
+public class MessageRepository extends GenericRepository<Message>{
 
-	public MessagesRepository() {
+	public MessageRepository() {
 		super(Message.class);
 	}
 

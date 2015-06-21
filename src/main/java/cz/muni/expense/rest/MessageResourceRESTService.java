@@ -4,7 +4,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
 import javax.ws.rs.Path;
 
-import cz.muni.expense.data.MessagesRepository;
+import cz.muni.expense.data.MessageRepository;
 import cz.muni.expense.model.Message;
 
 @Path("/message")
@@ -12,7 +12,7 @@ import cz.muni.expense.model.Message;
 public class MessageResourceRESTService extends GenericRESTService<Message>{
 
 	public MessageResourceRESTService() {
-        MessagesRepository repository = CDI.current().select(MessagesRepository.class).get();
+        MessageRepository repository = CDI.current().select(MessageRepository.class).get();
         this.setRepository(repository);
     }
 }

@@ -12,7 +12,7 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import cz.muni.expense.data.MessagesRepository;
+import cz.muni.expense.data.MessageRepository;
 import cz.muni.expense.model.Message;
 
 
@@ -20,7 +20,7 @@ import cz.muni.expense.model.Message;
 public class WebSocketTest {
 	
 	@Inject
-	private MessagesRepository repository;
+	private MessageRepository repository;
 	
 	@OnMessage
 	public void onMessage(String message, Session session) throws Exception {
