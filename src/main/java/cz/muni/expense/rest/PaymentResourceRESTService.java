@@ -2,9 +2,11 @@ package cz.muni.expense.rest;
 
 import cz.muni.expense.data.BankRepository;
 import cz.muni.expense.data.PaymentRepository;
+import cz.muni.expense.data.RuleRepository;
 import cz.muni.expense.enums.BankIdentifier;
 import cz.muni.expense.exception.ParserException;
 import cz.muni.expense.model.Bank;
+import cz.muni.expense.model.Category;
 import cz.muni.expense.model.Payment;
 import cz.muni.expense.parser.Parser;
 import cz.muni.expense.parser.ParserFactory;
@@ -18,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RunAs;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
@@ -44,6 +47,9 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
 
     @Inject
     private ParserFactory parserFactory;
+
+    @Inject
+    private RuleRepository ruleRepository;
 
     public PaymentResourceRESTService() {
         PaymentRepository repo = CDI.current().select(PaymentRepository.class).get();
@@ -73,7 +79,7 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
 
             List<byte[]> sources = form.getSources();
             List<Future<List<Payment>>> payments = new LinkedList<>();
-            
+
             // Run ansynchronous parsing
             for (byte[] data : sources) {
                 try (InputStream stream = new ByteArrayInputStream(data)) {
@@ -83,15 +89,21 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
                     Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             // Save collected payments from the files to database
             for (Future<List<Payment>> payment : payments) {
                 for (Payment p : payment.get()) {
                     p.setBank(bank);
+                    //p.setUser(currentUser)
+
+                    Category category = ruleRepository.findCategory(p);
+                    if (category != null) {
+                        p.setCategory(category);
+                    }
                     repository.create(p);
                 }
             }
-            
+
             builder = Response.ok();
         } catch (IOException ex) {
             Logger.getLogger(PaymentResourceRESTService.class.getName()).log(Level.SEVERE, null, ex);
@@ -108,7 +120,8 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
     }
 
     private PaymentUploadForm processInput(MultipartFormDataInput input) throws IOException {
-        String bank = input.getFormDataPart("bank", new GenericType<String>() {});
+        String bank = input.getFormDataPart("bank", new GenericType<String>() {
+        });
         BankIdentifier identifier = BankIdentifier.valueOf(bank);
         List<InputPart> fileInputParts = input.getFormDataMap().get("file");
 

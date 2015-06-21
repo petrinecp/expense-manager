@@ -15,8 +15,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "Users")
 public class User extends BaseEntity<Long> {
-    @OneToMany(mappedBy = "user")
-    private List<Rule> rules;
     
     @NotNull
     @Size(min = 1, max = 25)

@@ -51,7 +51,7 @@ public class Rule extends BaseEntity<Long> {
     }
 
     public void setRuleString(String ruleString) {
-        this.ruleString = ruleString;
+        this.ruleString = ruleString.toLowerCase();
     }
     
     //</editor-fold>
