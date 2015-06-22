@@ -16,15 +16,15 @@ import javax.persistence.Table;
  * @author majo
  */
 @Entity
-@Table(name = "Payments")
+@Table(name = "Rules")
 public class Rule extends BaseEntity<Long> {
     
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "userId")
     private User user;
     
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    //@JoinColumn(name = "categoryId")
     private Category category;
     
     private String ruleString;

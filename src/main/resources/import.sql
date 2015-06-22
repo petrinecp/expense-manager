@@ -1,5 +1,5 @@
 insert into Member (id, name, email, phone_number) values (1, 'John Smith', 'john.smith@mailinator.com', '2125551212') 
---insert into Users (id, name, forname) values (1, 'John', 'Doe')
+insert into Users (id, name, forname, username, passwd) values (1, 'John', 'Doe', 'admin', 'admin')
 insert into Categories (id, title) values (1, 'Car')
 insert into Categories (id, title) values (2, 'Travel')
 insert into Categories (id, title) values (3, 'Food & Drink')
