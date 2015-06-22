@@ -119,8 +119,7 @@ public class RuleRepositoryTest2 {
         Payment payment = new Payment();
         payment.setAmount(new BigDecimal(10));
         payment.setBank(null);
-        payment.setInfoForReceiver1("Info1");
-        payment.setInfoForReceiver2("omv gas, Botanicka 43");
+        payment.setAdditionalInfo("Info1");
         payment.setPaymentDate(new Date());
         payment.setUser(user);
 
@@ -137,8 +136,7 @@ public class RuleRepositoryTest2 {
         payment = new Payment();
         payment.setAmount(new BigDecimal(23));
         payment.setBank(null);
-        payment.setInfoForReceiver1("cinema, Mad Max");
-        payment.setInfoForReceiver2("Info2");
+        payment.setAdditionalInfo("cinema, Mad Max");
         payment.setPaymentDate(new Date());
         payment.setUser(user);
 
@@ -154,8 +152,7 @@ public class RuleRepositoryTest2 {
         Payment payment = new Payment();
         payment.setAmount(new BigDecimal(10));
         payment.setBank(null);
-        payment.setInfoForReceiver1("Info1");
-        payment.setInfoForReceiver2("omv gas, Botanicka 43");
+        payment.setAdditionalInfo("Info1");
         payment.setPaymentDate(new Date());
 
         payment.setCategory(ruleRepository.findCategory(payment));
@@ -166,8 +163,7 @@ public class RuleRepositoryTest2 {
         Payment payment = new Payment();
         payment.setAmount(new BigDecimal(10));
         payment.setBank(null);
-        payment.setInfoForReceiver1("Info1");
-        payment.setInfoForReceiver2("Info2");
+        payment.setAdditionalInfo("Info1");
         payment.setPaymentDate(new Date());
         payment.setUser(user);
 

@@ -33,8 +33,7 @@ public class Payment extends BaseEntity<Long> {
     private Date paymentDate;
 
     private BigDecimal amount;
-    private String infoForReceiver1;
-    private String infoForReceiver2;
+    private String additionalInfo;
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public User getUser() {
@@ -69,20 +68,12 @@ public class Payment extends BaseEntity<Long> {
         this.amount = amount;
     }
 
-    public String getInfoForReceiver1() {
-        return infoForReceiver1;
+    public String getAdditionalInfo() {
+        return additionalInfo;
     }
 
-    public void setInfoForReceiver1(String infoForReceiver1) {
-        this.infoForReceiver1 = infoForReceiver1;
-    }
-
-    public String getInfoForReceiver2() {
-        return infoForReceiver2;
-    }
-
-    public void setInfoForReceiver2(String infoForReceiver2) {
-        this.infoForReceiver2 = infoForReceiver2;
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
 
     public Category getCategory() {

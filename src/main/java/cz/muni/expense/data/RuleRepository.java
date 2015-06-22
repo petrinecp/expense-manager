@@ -12,6 +12,7 @@ import cz.muni.expense.model.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -30,8 +31,7 @@ public class RuleRepository extends GenericRepository<Rule> {
         }
         List<Rule> rules = this.findRulesByUserId(p.getUser().getId());
         for (Rule rule : rules) {
-            if (p.getInfoForReceiver1().contains(rule.getRuleString())
-                    || p.getInfoForReceiver2().contains(rule.getRuleString())) {
+            if (StringUtils.containsIgnoreCase(p.getAdditionalInfo(), rule.getRuleString())) {
                 return rule.getCategory();
             }
         }

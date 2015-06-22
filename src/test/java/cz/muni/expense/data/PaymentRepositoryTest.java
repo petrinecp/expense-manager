@@ -57,8 +57,7 @@ public class PaymentRepositoryTest {
 		defaultPayment = new Payment();
 		defaultPayment.setAmount(new BigDecimal(900));
 		defaultPayment.setBank(null);
-		defaultPayment.setInfoForReceiver1("Info1a");
-		defaultPayment.setInfoForReceiver2("Info2a");
+		defaultPayment.setAdditionalInfo("Info1a");
 		defaultPayment.setPaymentDate(new Date());
 		defaultPayment.setUser(null);
 		
@@ -70,16 +69,14 @@ public class PaymentRepositoryTest {
 		Payment payment = new Payment();
 		payment.setAmount(new BigDecimal(10));
 		payment.setBank(null);
-		payment.setInfoForReceiver1("Info1");
-		payment.setInfoForReceiver2("Info2");
+		payment.setAdditionalInfo("Info1");
 		payment.setPaymentDate(new Date());
 		payment.setUser(null);
 		
 		repository.create(payment);
 		
 		Payment paymentFromDb = repository.findById(payment.getId());
-		assertEquals("Bad info for receiverOne", "Info1", paymentFromDb.getInfoForReceiver1());
-		assertEquals("Bad info for receiverTwo", "Info2", paymentFromDb.getInfoForReceiver2());
+		assertEquals("Bad info for receiverOne", "Info1", paymentFromDb.getAdditionalInfo());
 	}
 	
 	@Test
@@ -101,15 +98,13 @@ public class PaymentRepositoryTest {
 	@Test
 	public void findByIdTest(){
 		Payment p = repository.findById(defaultPayment.getId());
-		assertEquals("Info1a", p.getInfoForReceiver1());
-		assertEquals("Info2a", p.getInfoForReceiver2());
+		assertEquals("Info1a", p.getAdditionalInfo());
 	}
 	
 	@Test
 	public void findAllPaymentsTest(){
 		List<Payment> payments = repository.findAll();
 		assertEquals("Database should contains one payment.", 1, payments.size());
-		assertEquals("Bad info for receiverOne", "Info1a", payments.get(0).getInfoForReceiver1());
-		assertEquals("Bad info for receiverTwo", "Info2a", payments.get(0).getInfoForReceiver2());
+		assertEquals("Bad info for receiverOne", "Info1a", payments.get(0).getAdditionalInfo());
 	}
 }

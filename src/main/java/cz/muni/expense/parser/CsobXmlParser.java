@@ -63,12 +63,13 @@ public class CsobXmlParser implements Parser {
 
                     Date paymentDate = DateFormat.getDateInstance(DateFormat.SHORT, czechLocale).parse(date);
                     String accountNumberWithBankId = (accountNumber.isEmpty() || bankId.isEmpty()) ? null : accountNumber + "/" + bankId;
+                    String additionalInfo = info1.isEmpty() ? "" : info1.trim() + "\n";
+                    additionalInfo += info2.isEmpty() ? "" : info2.trim();
                     
                     payment.setAccountNumber(accountNumberWithBankId);
                     payment.setPaymentDate(paymentDate);
                     payment.setAmount(new BigDecimal(amount.replace(",", ".")));
-                    payment.setInfoForReceiver1(info1.trim());
-                    payment.setInfoForReceiver2(info2.trim());
+                    payment.setAdditionalInfo(additionalInfo.isEmpty() ? null : additionalInfo);
 
                     payments.add(payment);
                 }

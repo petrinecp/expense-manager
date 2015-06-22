@@ -72,8 +72,7 @@ public class PaymentResourceRESTServiceTest {
 		payment.setAmount(new BigDecimal(10830));
 		payment.setBank(bank);
 		payment.setUser(user);
-		payment.setInfoForReceiver1("infoForReceiver1");
-		payment.setInfoForReceiver2("infoForReceiver2");
+		payment.setAdditionalInfo("infoForReceiver");
 		payment.setPaymentDate(new Date());
 		Client client = ClientBuilder.newBuilder().build();
         WebTarget target = client.target("http://localhost:8080/test/rest/payment");
@@ -82,8 +81,7 @@ public class PaymentResourceRESTServiceTest {
         assertEquals("Response should be created.", 201, response.getStatus());
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("After post should be retrieved just 1 object", 1, payments.size());
-        assertEquals("Wrong payment info1", "infoForReceiver1", payments.get(0).getInfoForReceiver1());
-        assertEquals("Wrong payment info2", "infoForReceiver2", payments.get(0).getInfoForReceiver2());
+        assertEquals("Wrong payment info1", "infoForReceiver1", payments.get(0).getAdditionalInfo());
         assertEquals("Wrong payment amount", new BigDecimal(10830), payments.get(0).getAmount());
         
         response.close();
@@ -113,8 +111,7 @@ public class PaymentResourceRESTServiceTest {
 
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("Request should response one object.", 1, payments.size());
-        assertEquals("Wrong payment info", "infoForReceiver1", payments.get(0).getInfoForReceiver1());
-        assertEquals("Wrong payment info", "infoForReceiver2", payments.get(0).getInfoForReceiver2());
+        assertEquals("Wrong payment info", "infoForReceiver1", payments.get(0).getAdditionalInfo());
 
         response.close();
     }
@@ -138,8 +135,7 @@ public class PaymentResourceRESTServiceTest {
 		payment.setAmount(new BigDecimal(10830));
 		payment.setBank(bank);
 		payment.setUser(user);
-		payment.setInfoForReceiver1("updatedInfoForReceiver1");
-		payment.setInfoForReceiver2("infoForReceiver2");
+		payment.setAdditionalInfo("updatedInfoForReceiver1");
 		payment.setPaymentDate(new Date());
 		
 		Client client = ClientBuilder.newBuilder().build();
@@ -148,8 +144,7 @@ public class PaymentResourceRESTServiceTest {
         
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("Response status should be updated - 201.", 201, response.getStatus());
-        assertEquals("Wrong payment info", "updatedInfoForReceiver1", payments.get(0).getInfoForReceiver1());
-        assertEquals("Wrong payment info", "infoForReceiver2", payments.get(0).getInfoForReceiver2());
+        assertEquals("Wrong payment info", "updatedInfoForReceiver1", payments.get(0).getAdditionalInfo());
 
         response.close();
 	}
@@ -161,8 +156,7 @@ public class PaymentResourceRESTServiceTest {
 		payment.setAmount(new BigDecimal(649));
 		payment.setBank(bank);
 		payment.setUser(user);
-		payment.setInfoForReceiver1("infoForReceiver1");
-		payment.setInfoForReceiver2("infoForReceiver2");
+		payment.setAdditionalInfo("infoForReceiver1");
 		payment.setPaymentDate(new Date());
 		Client client = ClientBuilder.newBuilder().build();
         WebTarget target = client.target("http://localhost:8080/test/rest/payment");
