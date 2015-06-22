@@ -54,12 +54,17 @@ public class CsobXmlParser implements Parser {
                     Element paymentElement = (Element) paymentNode;
                     Payment payment = new Payment();
 
+                    String accountNumber = paymentElement.getElementsByTagName(CsobXmlStructure.ACCOUT_NUMBER).item(0).getTextContent();
+                    String bankId = paymentElement.getElementsByTagName(CsobXmlStructure.BANK_ID).item(0).getTextContent();
                     String date = paymentElement.getElementsByTagName(CsobXmlStructure.DATE).item(0).getTextContent();
                     String amount = paymentElement.getElementsByTagName(CsobXmlStructure.AMOUNT).item(0).getTextContent();
                     String info1 = paymentElement.getElementsByTagName(CsobXmlStructure.INFO_FOR_RECEIVER1).item(0).getTextContent();
                     String info2 = paymentElement.getElementsByTagName(CsobXmlStructure.INFO_FOR_RECEIVER2).item(0).getTextContent();
 
                     Date paymentDate = DateFormat.getDateInstance(DateFormat.SHORT, czechLocale).parse(date);
+                    String accountNumberWithBankId = (accountNumber.isEmpty() || bankId.isEmpty()) ? null : accountNumber + "/" + bankId;
+                    
+                    payment.setAccountNumber(accountNumberWithBankId);
                     payment.setPaymentDate(paymentDate);
                     payment.setAmount(new BigDecimal(amount.replace(",", ".")));
                     payment.setInfoForReceiver1(info1.trim());

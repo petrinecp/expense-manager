@@ -9,13 +9,13 @@
         <form role="form login">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" ng-model="username" placeholder="Username" />
+                <input type="text" class="form-control" id="username" ng-model="authLoginElement.username" placeholder="Username" />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password" />
+                <input type="password" class="form-control" id="password" ng-model="authLoginElement.password" placeholder="Password" />
             </div>
-            <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
+            <button type="submit" class="btn btn-primary" ng-click="login(authLoginElement)">Login</button>
         </form>
     </div>
 </div>

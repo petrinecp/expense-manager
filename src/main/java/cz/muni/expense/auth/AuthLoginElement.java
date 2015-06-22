@@ -24,6 +24,9 @@ public class AuthLoginElement implements Serializable {
         this.username = username;
         this.password = password;
     }
+    
+    public AuthLoginElement() {
+    }
 
     
     // Getters and setters

@@ -58,7 +58,7 @@ public class BankResourceRESTServiceTest {
 
         List<Bank> banks = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("Database should contains one bank.", 1, banks.size());
-        assertEquals("Wrong bank title.", "ÄŒSOB", banks.get(0).getTitle());
+        assertEquals("Wrong bank title.", "ČSOB", banks.get(0).getTitle());
         assertEquals("Wrong bank identifier.", BankIdentifier.CSOB, banks.get(0).getIdentifier());
         assertEquals("Wrong bank id.", 0, banks.get(0).getId().intValue());
 
@@ -75,7 +75,7 @@ public class BankResourceRESTServiceTest {
 
         List<Bank> banks = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("Database should contains one bank.", 1, banks.size());
-        assertEquals("Wrong bank title.", "ÄŒSOB", banks.get(0).getTitle());
+        assertEquals("Wrong bank title.", "ČSOB", banks.get(0).getTitle());
         assertEquals("Wrong bank identifier.", BankIdentifier.CSOB, banks.get(0).getIdentifier());
         assertEquals("Wrong bank id.", 0, banks.get(0).getId().intValue());
 

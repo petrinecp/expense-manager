@@ -26,7 +26,7 @@ public class RuleRepository extends GenericRepository<Rule> {
 
     public Category findCategory(Payment p) {
         if (p.getUser() == null) {
-            throw new NullPointerException("User can not be null");
+            throw new IllegalArgumentException("User can not be null");
         }
         List<Rule> rules = this.findRulesByUserId(p.getUser().getId());
         for (Rule rule : rules) {

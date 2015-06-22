@@ -11,22 +11,27 @@ import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.logging.Logger;
 
 import cz.muni.expense.data.MessageRepository;
+import cz.muni.expense.data.UserRepository;
 import cz.muni.expense.model.Message;
 
 
 @ServerEndpoint("/websocket")
-public class WebSocketTest {
+public class WebSocketMessager {
 	
 	@Inject
-	private MessageRepository repository;
+	private UserRepository userRepository;
+	
+	@Inject
+	private MessageRepository messageRepository;
 	
 	@OnMessage
 	public void onMessage(String message, Session session) throws Exception {
-		System.out.println("User input: " + message + " !");
+		System.out.println("User input: " + message);
 		
-		repository.create(getMessageFromJson(message));
+		messageRepository.create(getMessageFromJson(message));
 	}
 
 	@OnOpen
