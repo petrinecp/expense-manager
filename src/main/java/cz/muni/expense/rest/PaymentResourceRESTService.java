@@ -95,12 +95,17 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
                 for (Payment p : payment.get()) {
                     p.setBank(bank);
                     //p.setUser(currentUser)
-
-                    Category category = ruleRepository.findCategory(p);
-                    if (category != null) {
-                        p.setCategory(category);
+                    
+//                    Uncommented when user authentication is implemented
+//                    Category category = ruleRepository.findCategory(p);
+//                    if (category != null) {
+//                        p.setCategory(category);
+//                    }
+                    try {
+                        repository.create(p);
+                    } catch (Exception e) {
+                        int a = 2;
                     }
-                    repository.create(p);
                 }
             }
 

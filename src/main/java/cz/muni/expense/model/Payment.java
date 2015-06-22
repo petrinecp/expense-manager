@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -25,6 +26,9 @@ public class Payment extends BaseEntity<Long> {
     @ManyToOne
     private Category category;
 
+    @Pattern(regexp = "[0-9]*/[0-9]{4}")
+    private String accountNumber;
+    
     @Temporal(TemporalType.DATE)
     private Date paymentDate;
 
@@ -87,6 +91,14 @@ public class Payment extends BaseEntity<Long> {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+    
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 //</editor-fold>
 }
