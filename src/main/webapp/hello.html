@@ -9,8 +9,8 @@
 			value="Send Message to Server" onclick="start()" />
 	</div>
 	<div id="messages"></div>
-	<script type="text/javascript">
-		var webSocket = new WebSocket('ws://localhost:8080/expense-manager/websocket');
+	<script type="text/javascript" ">
+		var webSocket = new WebSocket('wss://localhost:8443/expense-manager/websocket');
 		
 		webSocket.onerror = function(event) {
 			onError(event)
