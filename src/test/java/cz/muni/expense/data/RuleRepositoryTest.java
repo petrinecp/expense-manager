@@ -1,17 +1,14 @@
 package cz.muni.expense.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.EntityNotFoundException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -24,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import cz.muni.expense.model.Category;
+import cz.muni.expense.model.Payment;
 import cz.muni.expense.model.Rule;
 import cz.muni.expense.model.User;
 
@@ -49,6 +47,15 @@ public class RuleRepositoryTest {
 	
 	@Inject
 	RuleRepository ruleRepository;
+	
+	@Inject
+    UserRepository userRepository;
+
+    @Inject
+    PaymentRepository paymentRepository;
+    
+    @Inject
+    CategoryRepository categoryRepository;
 	
 	@Test
     @InSequence(1)
@@ -132,4 +139,112 @@ public class RuleRepositoryTest {
         ruleRepository.deleteById(20L);
     }
 
+    @Test
+    @InSequence(8)
+    public void findRulePerPayment(){
+    	User user = prepareDb();
+    	
+	    Payment payment = new Payment();
+	    payment.setAmount(new BigDecimal(10));
+	    payment.setBank(null);
+	    payment.setInfoForReceiver1("Info1");
+	    payment.setInfoForReceiver2("omv gas, Botanicka 43");
+	    payment.setPaymentDate(new Date());
+	    payment.setUser(user);
+	
+	    
+	    Category foundCategory = ruleRepository.findCategory(payment);        
+	    assertNotNull("Found category is null.", foundCategory);
+	    payment.setCategory(foundCategory);
+	    paymentRepository.create(payment);
+	
+	    Payment paymentFromDb = paymentRepository.findById(payment.getId());
+	    assertNotNull("Found category is null.", paymentFromDb.getCategory());
+	    assertEquals("Bad category", "Car", paymentFromDb.getCategory().getTitle());
+	
+	    payment = new Payment();
+	    payment.setAmount(new BigDecimal(23));
+	    payment.setBank(null);
+	    payment.setInfoForReceiver1("cinema, Mad Max");
+	    payment.setInfoForReceiver2("Info2");
+	    payment.setPaymentDate(new Date());
+	    payment.setUser(user);
+	
+	    payment.setCategory(ruleRepository.findCategory(payment));
+	    paymentRepository.create(payment);
+	
+	    paymentFromDb = paymentRepository.findById(payment.getId());
+	    assertEquals("Bad category", "Entertainment", paymentFromDb.getCategory().getTitle());
+    }
+
+	private User prepareDb() {
+		User user = new User();
+        user.setForname("forname");
+        user.setName("name");
+        userRepository.create(user);
+        
+        Category categoryCar = new Category();
+        categoryCar.setTitle("Car");
+        categoryRepository.create(categoryCar);
+
+        Category categoryEntertainment = new Category();
+        categoryEntertainment.setTitle("Entertainment");
+        categoryEntertainment.setUser(user);
+        categoryRepository.create(categoryEntertainment);
+
+        Rule ruleOmv = new Rule();
+        ruleOmv.setCategory(categoryCar);
+        ruleOmv.setUser(user);
+        ruleOmv.setRuleString("OMV");
+        ruleRepository.create(ruleOmv);
+
+        Rule ruleCinema = new Rule();
+        ruleCinema.setCategory(categoryEntertainment);
+        ruleCinema.setUser(user);
+        ruleCinema.setRuleString("cinema");
+        ruleRepository.create(ruleCinema);
+
+        Rule ruleFalse = new Rule();
+        ruleFalse.setCategory(categoryEntertainment);
+        ruleFalse.setUser(user);
+        ruleFalse.setRuleString("travel");
+        ruleRepository.create(ruleFalse);
+		return user;
+	}
+    
+    @Test(expected = Exception.class)
+    @InSequence(9)
+    public void findRuleWithNullUserTestNullPointerException() throws Exception{
+        Payment payment = new Payment();
+        payment.setAmount(new BigDecimal(10));
+        payment.setBank(null);
+        payment.setInfoForReceiver1("Info1");
+        payment.setInfoForReceiver2("omv gas, Botanicka 43");
+        payment.setPaymentDate(new Date());
+
+        payment.setCategory(ruleRepository.findCategory(payment));
+    }
+    
+    @Test
+    @InSequence(10)
+    public void findRuleNoRuleForPayment() {
+    	User user = new User();
+        user.setForname("forname");
+        user.setName("name");
+        userRepository.create(user);
+        
+        Payment payment = new Payment();
+        payment.setAmount(new BigDecimal(10));
+        payment.setBank(null);
+        payment.setInfoForReceiver1("Info1");
+        payment.setInfoForReceiver2("Info2");
+        payment.setPaymentDate(new Date());
+        payment.setUser(user);
+
+        payment.setCategory(ruleRepository.findCategory(payment));
+        paymentRepository.create(payment);
+
+        Payment paymentFromDb = paymentRepository.findById(payment.getId());
+        assertNull("Bad category have been found", paymentFromDb.getCategory());
+    }
 }
