@@ -37,23 +37,31 @@ var app = angular.module('app', [
                 }
             });
     }])
+    
+    .config(function ($httpProvider) {
+	    $httpProvider.interceptors.push('authHttpRequestInterceptor');
+	})
 
-    .controller('app', ['$rootScope', '$scope', '$state', 'Data', function ($rootScope, $scope, $state, Data) {
+    .controller('app', ['$rootScope', '$scope', '$state', 'authFactory', function ($rootScope, $scope, $state, authFactory) {
         'use strict';
         
         $scope.$state = $state;
-        $scope.data = Data;
         $scope.loggedIn = false;
         $scope.navbarCollapsed = true;
-        $scope.username = 'admin';
-        $scope.userrole = 'admin';
+        $scope.authLoginElement = {
+        	"username": "",
+        	"password": ""
+        };
         
-
-        $scope.login = function () {
-            $scope.data.get({section: 'users', id: $scope.username}, function (data) {
+        $scope.login = function (authLoginElement) {
+            authFactory.login(authLoginElement).success(function (data) {
+                authFactory.setAuthData(data);
                 $rootScope.user = data;
                 $scope.loggedIn = true;
-                $state.go('users');
+                $state.go('payments');
+            }).error(function () {
+            	$scope.loggedIn = false;
+            	$state.go('app');
             });
         };
         
@@ -166,6 +174,51 @@ var app = angular.module('app', [
         };
     }])
     
+    .factory('authFactory', ['$rootScope', '$http', function ($rootScope, $http) {
+
+        var authFactory = {
+            authData: undefined
+        };
+
+        authFactory.setAuthData = function (authData) {
+            this.authData = {
+                authId: authData.authId,
+                authToken: authData.authToken,
+                authPermission: authData.authPermission
+            };
+            $rootScope.$broadcast('authChanged');
+        };
+
+        authFactory.getAuthData = function () {
+            return this.authData;
+        };
+
+        authFactory.isAuthenticated = function () {
+            return !angular.isUndefined(this.getAuthData());
+        };
+        
+        authFactory.login = function (authLoginElement) {
+            return $http.post('rest/auth/login', authLoginElement);
+        };
+
+        return authFactory;
+    }])
+    
+    
+    .factory('authHttpRequestInterceptor', ['$rootScope', '$injector', function ($rootScope, $injector) {
+    var authHttpRequestInterceptor = {
+	        request: function ($request) {
+	            var authFactory = $injector.get('authFactory');
+	            if (authFactory.isAuthenticated()) {
+	                $request.headers['auth-id'] = authFactory.getAuthData().authId;
+	                $request.headers['auth-token'] = authFactory.getAuthData().authToken;
+	            }
+	            return $request;
+	        }
+        };
+
+    return authHttpRequestInterceptor;
+    }])
     
     .factory('Data', ['$rootScope', '$resource', function ($rootScope, $resource) {
         'use strict';

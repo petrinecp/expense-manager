@@ -63,7 +63,7 @@ angular.module('payment-new', [
                     Upload.upload({
                         url: 'rest/payment/upload',
                         fields: {
-                            'bank': $scope.data.payment_new.bank.title
+                            'bank': $scope.data.payment_new.bank.identifier
                         },
                         file: file
                     }).progress(function (evt) {
