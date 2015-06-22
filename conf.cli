@@ -1,0 +1,6 @@
+## allow https on port 8443, default
+
+/core-service=management/security-realm=UndertowRealm:add()
+/core-service=management/security-realm=UndertowRealm/server-identity=ssl:add(keystore-path=foo.keystore,keystore-password=secret, keystore-relative-to=jboss.server.config.dir)
+
+/subsystem=undertow/server=default-server/https-listener=https/:add(socket-binding=https,security-realm=UndertowRealm)
