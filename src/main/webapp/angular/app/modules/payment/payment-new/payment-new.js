@@ -18,9 +18,25 @@ angular.module('payment-new', [
         $scope.accordianOpen1 = true;
         $scope.accordianOpen2 = false;
               
-		$scope.data.query({
-			section : 'bank'
+		$scope.data.query({section : 'bank'}, function (data) {
+			$scope.setDefaultBank();
 		});
+		
+        //Empty new payment
+        $scope.data.payment_new = {
+        		bank : null,
+        		paymentDate: new Date()
+        };
+        
+		//Set default value to 'bank' choose box
+        $scope.setDefaultBank = function() {
+        	if ($scope.data.bank !== undefined && $scope.data.payment_new !== undefined){
+        		var arrayLength = $scope.data.bank.length;
+        		if (arrayLength > 0){
+        	    	$scope.data.payment_new.bank = $scope.data.bank[0];
+        	    }
+        	}
+        };
 
         $scope.save = function () {
             $scope.isDisabled = true;
@@ -29,12 +45,6 @@ angular.module('payment-new', [
                 $scope.data.payment.push(data);
                 $state.go('payments');
             });
-        };
-
-        //Empty new payment
-        $scope.data.payment_new = {
-        		bank : null,
-        		paymentDate: new Date()
         };
         
         // Remember if datepicker is open

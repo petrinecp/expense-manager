@@ -81,7 +81,7 @@ angular.module('payment', [
         
         //Set default value to 'bank' choose box
         $scope.setDefaultBank = function() {
-        	if ($scope.data.bank !== undefined && $scope.payment.bank !== undefined){
+        	if ($scope.data.bank !== undefined && $scope.payment !== undefined && $scope.payment.bank !== undefined){
         		var arrayLength = $scope.data.bank.length;
             	for (var i = 0; i < arrayLength; i++) {
             	    if ($scope.data.bank[i].id == $scope.payment.bank.id){
