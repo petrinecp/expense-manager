@@ -23,12 +23,12 @@ public class AuthAccessElement implements Serializable {
 
     private String authId;
     private String authToken;
-    private UserRole authPermission;
+    private String authPermission;
 
     public AuthAccessElement() {
     }
 
-    public AuthAccessElement(String authId, String authToken, UserRole authPermission) {
+    public AuthAccessElement(String authId, String authToken, String authPermission) {
         this.authId = authId;
         this.authToken = authToken;
         this.authPermission = authPermission;
@@ -53,11 +53,11 @@ public class AuthAccessElement implements Serializable {
         this.authToken = authToken;
     }
 
-    public UserRole getAuthPermission() {
+    public String getAuthPermission() {
         return authPermission;
     }
 
-    public void setAuthPermission(UserRole authPermission) {
+    public void setAuthPermission(String authPermission) {
         this.authPermission = authPermission;
     }
 }

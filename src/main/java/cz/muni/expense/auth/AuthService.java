@@ -15,4 +15,5 @@ import java.util.Set;
 public interface AuthService {
     AuthAccessElement login(AuthLoginElement loginElement);
     boolean isAuthorized(String authId, String authToken, Set<String> rolesAllowed);
+	boolean logout(String authId, String authToken);
 }

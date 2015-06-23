@@ -66,9 +66,13 @@ var app = angular.module('app', [
         };
         
         $scope.logout = function () {
-            $scope.loggedIn = false;
-            $rootScope.user = {};
-            $state.go('app');
+            authFactory.logout().success(function (data) {
+                authFactory.cleanAuthData();
+                $rootScope.user = {};
+                $scope.loggedIn = false;
+                $state.go('app');
+            }).error(function () {
+            });
         };
     }])
 
@@ -188,6 +192,10 @@ var app = angular.module('app', [
             };
             $rootScope.$broadcast('authChanged');
         };
+        
+        authFactory.cleanAuthData = function () {
+            this.authData = undefined;
+        };
 
         authFactory.getAuthData = function () {
             return this.authData;
@@ -199,6 +207,10 @@ var app = angular.module('app', [
         
         authFactory.login = function (authLoginElement) {
             return $http.post('rest/auth/login', authLoginElement);
+        };
+        
+        authFactory.logout = function () {
+            return $http.post('rest/auth/logout');
         };
 
         return authFactory;

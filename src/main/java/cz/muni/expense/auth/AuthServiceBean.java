@@ -34,6 +34,18 @@ public class AuthServiceBean implements AuthService {
         }
         return null;
     }
+    
+    @Override
+    public boolean logout(String authId, String authToken) {
+    	User user = userRepository.findByUsernameAndAuthToken(authId, authToken);
+        if (user != null) {
+            user.setAuthToken(UUID.randomUUID().toString());
+            userRepository.update(user);
+            return true;
+        } else {
+        	return false;
+        }
+    }
 
     @Override
     public boolean isAuthorized(String authId, String authToken, Set<String> rolesAllowed) {

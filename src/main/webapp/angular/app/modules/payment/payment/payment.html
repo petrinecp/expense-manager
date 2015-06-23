@@ -14,10 +14,8 @@
                     <dd>{{ payment.paymentDate || 'None' }}</dd>
                     <dt>Amount</dt>
                     <dd>{{ payment.amount || 'None' }}</dd>
-                    <dt>Info for receiver 1</dt>
-                    <dd>{{ payment.infoForReceiver1 || 'None' }}</dd>
-                    <dt>Info for receiver 2</dt>
-                    <dd>{{ payment.infoForReceiver2 || 'None' }}</dd>
+                    <dt>Additional information</dt>
+                    <dd>{{ payment.additionalInfo || 'None' }}</dd>
                 </dl>
             </div>
             <form role="form" ng-show="editable">
@@ -27,30 +25,27 @@
                     	<dd>{{ payment.id || 'None' }}</dd>
                     </div>
                     <div class="form-group">
-                        <label for="title">Bank</label>
-                        <select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="payment.bank">
+                        <label for="selectBank">Bank</label>
+                        <select id="selectBank" class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="payment.bank">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="title">Payment date</label>                        
+                        <label for="paymentDate">Payment date</label>                        
                         <p class="input-group">
-				            <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy"  is-open="datePicker.isOpen" ng-model="payment.paymentDate" />
+				            <input id="paymentDate" type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy"  is-open="datePicker.isOpen" ng-model="payment.paymentDate" />
 				            <span class="input-group-btn">
 				            	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 				            </span>
 			            </p>
                     </div>
                     <div class="form-group">
-                        <label for="title">Amount</label>
+                        <label for="amount">Amount</label>
                         <input type="text" class="form-control" id="amount" ng-model="payment.amount" />
                     </div>
                     <div class="form-group">
-                        <label for="title">Info for receiver 1</label>
-                        <input type="text" class="form-control" id="infoForReceiver1" ng-model="payment.infoForReceiver1" />
-                    </div>
-                    <div class="form-group">
-                        <label for="title">Info for receiver 2</label>
-                        <input type="text" class="form-control" id="infoForReceiver2" ng-model="payment.infoForReceiver2" />
+                        <label for="additionalInfo">Additional information</label>
+                        <textarea type="text" class="form-control" id="additionalInfo" ng-model="payment.additionalInfo">
+                        </textarea>
                     </div>
                 </fieldset>
             </form>

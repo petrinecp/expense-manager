@@ -11,16 +11,20 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div>;
     <div class="col-md-8 col-md-pull-4">
         <div class="row title">
-            <div class="col-xs-8">
+            <div class="col-md-4 col-sm-4 col-xs-12">
                 <h1>Payments</h1>
-                <a class="btn btn-primary pull-right" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a>
-                <a ui-sref="payments.new" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>New payment</a>
             </div>
-            <div class="col-xs-4">
-                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1; refreshPaymentsChart()" />
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              	<div class="pull-right">
+	                <a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a> 
+	                <a class="btn btn-primary" ui-sref="payments.new" href="#/payments/new"><span class="glyphicon glyphicon-plus"></span>New payment</a> 
+				</div>
+              </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1; refreshPaymentsChart()">
             </div>
         </div>
         <table class="table table-striped">
@@ -31,8 +35,7 @@
                     <th class="col-md-1"><a href="" ng-click="predicate='bank';reverse=!reverse">Bank</a></th>
                     <th class="col-md-2"><a href="" ng-click="predicate='paymentDate';reverse=!reverse">Payment date</a></th>
                     <th class="col-md-1"><a href="" ng-click="predicate='amount';reverse=!reverse">Amount</a></th>
-                    <th class="col-md-2"><a href="" ng-click="predicate='infoForReceiver1';reverse=!reverse">Info for receiver 1</a></th>
-                    <th class="col-md-2"><a href="" ng-click="predicate='infoForReceiver2';reverse=!reverse">Info for receiver 2</a></th>
+                    <th class="col-md-3"><a href="" ng-click="predicate='additionalInfo';reverse=!reverse">Additional information</a></th>
                     <th class="col-md-1"><a href="">Detail</a></th>
                 </tr>
             </thead>
@@ -43,8 +46,7 @@
                     <td>{{ payment.bank.title || 'None' }}</td>
                     <td>{{ payment.paymentDate || 'None' }}</td>
                     <td>{{ payment.amount || 'None' }}</td>
-                    <td>{{ payment.infoForReceiver1 || 'None' }}</td>
-                    <td>{{ payment.infoForReceiver2 || 'None' }}</td>
+                    <td>{{ payment.additionalInfo || 'None' }}</td>
                     <td><a ui-sref="payments.view({id:payment.id})">Detail</a></td>
                 </tr>
             </tbody>
