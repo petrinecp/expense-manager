@@ -11,13 +11,13 @@
                     </accordion-heading>
                     <div class="form-group">
                         <label for="bank">Bank</label>
-                        	<select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
+                        <select id="bank" class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="paymentDate">Payment date</label>
                         <p class="input-group">
-				            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"  is-open="datePicker.isOpen" ng-model="data.payment_new.paymentDate" />
+				            <input id="paymentDate" type="text" class="form-control" datepicker-popup="yyyy-MM-dd"  is-open="datePicker.isOpen" ng-model="data.payment_new.paymentDate" />
 				            <span class="input-group-btn">
 				            	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 				            </span>
@@ -28,13 +28,10 @@
                         <input type="text" class="form-control" id="amount" ng-model="data.payment_new.amount" />
                     </div>
                     <div class="form-group">
-                        <label for="title">infoForReceiver1</label>
-                        <input type="text" class="form-control" id="infoForReceiver1" ng-model="data.payment_new.infoForReceiver1" />
+                        <label for="additionalInfo">Additional information</label>
+                        <textarea type="text" class="form-control" id="additionalInfo" ng-model="data.payment_new.additionalInfo">
+                        </textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="title">infoForReceiver2</label>
-                        <input type="text" class="form-control" id="infoForReceiver2" ng-model="data.payment_new.infoForReceiver2" />
-                    </div>                    
                     
                     <button type="submit" class="btn btn-primary" ng-click="save()">Save</button>
                 </accordion-group>
@@ -46,8 +43,8 @@
                     Import payments <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordianOpen2, 'glyphicon-chevron-right': !accordianOpen2}"></i>
                     </accordion-heading>
                     <div class="form-group">
-                        <label for="bank">Bank</label>
-                        	<select class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
+                        <label for="bankImport">Bank</label>
+                        <select id="bankImport" class="form-control" ng-options="bank as bank.title for bank in data.bank" ng-model="data.payment_new.bank">
                         </select>
                     </div>
                     <div class="form-group">
