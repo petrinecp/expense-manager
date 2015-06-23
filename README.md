@@ -5,6 +5,9 @@ http://dev.mysql.com/downloads/connector/j/
 3. Start Wildfly by running bin/standalone.sh
 4. Execute setup.sh
 
+# Demo
+https://expensemanager-supercool.rhcloud.com/
+
 # Project Overview
 ### Entity-Relationship Diagram
 ![ERD](http://i.imgur.com/1IVAKZl.png)
