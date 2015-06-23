@@ -45,7 +45,7 @@ public abstract class GenericRESTService<T extends BaseEntity>{
         this.repository = repository;
     }
 
-    @RolesAllowed({UserRole.BASIC_USER})
+    @RolesAllowed({UserRole.BASIC_USER,UserRole.ADMIN,UserRole.PRIVILEGED_USER})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<T> listAll() {
