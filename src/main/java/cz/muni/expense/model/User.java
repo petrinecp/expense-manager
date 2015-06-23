@@ -8,6 +8,8 @@ package cz.muni.expense.model;
 import cz.muni.expense.enums.UserRole;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -34,7 +36,7 @@ public class User extends BaseEntity<Long> {
     private String username;
     private String passwd;
     private String authToken;
-    private UserRole authRole;
+    private String authRole;
 
     public String getName() {
         return name;
@@ -76,11 +78,15 @@ public class User extends BaseEntity<Long> {
         this.authToken = authToken;
     }
 
-    public UserRole getAuthRole() {
+    public String getAuthRole() {
         return authRole;
     }
 
-    public void setAuthRole(UserRole authRole) {
-        this.authRole = authRole;
+    public void setAuthRole(String authRole) {
+        if(UserRole.LIST_OF_ROLES.contains(authRole)){
+            this.authRole = authRole;
+        } else {
+            throw new IllegalArgumentException("bad auth role");
+        }
     }
 }

@@ -25,7 +25,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import cz.muni.expense.data.GenericRepository;
+import cz.muni.expense.enums.UserRole;
 import cz.muni.expense.model.BaseEntity;
+import javax.annotation.security.RolesAllowed;
 
 /**
  *
@@ -43,6 +45,7 @@ public abstract class GenericRESTService<T extends BaseEntity>{
         this.repository = repository;
     }
 
+    @RolesAllowed({UserRole.BASIC_USER})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<T> listAll() {
