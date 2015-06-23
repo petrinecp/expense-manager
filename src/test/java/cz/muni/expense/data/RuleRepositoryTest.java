@@ -25,98 +25,99 @@ import cz.muni.expense.model.Payment;
 import cz.muni.expense.model.Rule;
 import cz.muni.expense.model.User;
 
-
 /**
  * Test class for testing BankRepository
- * 
+ *
  * @author Martin Drimal
  *
  */
 @RunWith(Arquillian.class)
 public class RuleRepositoryTest {
-	
-	@Deployment
+
+    @Deployment
     public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, "cz.muni.expense")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addPackages(true, "cz.muni.expense")
+                .addPackages(true, "org.apache.commons.lang3")
+                .addPackages(true, "org.codehaus.jackson")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
-	}
-	
-	@Inject
-	RuleRepository ruleRepository;
-	
-	@Inject
+    }
+
+    @Inject
+    RuleRepository ruleRepository;
+
+    @Inject
     UserRepository userRepository;
 
     @Inject
     PaymentRepository paymentRepository;
-    
+
     @Inject
     CategoryRepository categoryRepository;
-	
-	@Test
+
+    @Test
     @InSequence(1)
     public void createRoleTest() throws Exception {
-    	User user = new User();
-    	user.setId(1L);
-    	user.setName("Peter");
-    	user.setForname("Nash");
-    	
-    	Category cat = new Category();
-    	cat.setId(1L);
-    	cat.setUser(user);
-    	cat.setTitle("Travel");
-    	
+        User user = new User();
+        user.setId(1L);
+        user.setName("Peter");
+        user.setForname("Nash");
+
+        Category cat = new Category();
+        cat.setId(1L);
+        cat.setUser(user);
+        cat.setTitle("Travel");
+
         Rule rule = new Rule();
         rule.setUser(user);
         rule.setRuleString("test");
         rule.setCategory(cat);
-        
+
         ruleRepository.create(rule);
         List<Rule> rules = ruleRepository.findAll();
         assertEquals("Wrong size", 1, rules.size());
     }
-	
+
     @Test
     @InSequence(2)
     public void listAllRulesTest() throws Exception {
 
-    	List<Rule> rules = ruleRepository.findAll();
+        List<Rule> rules = ruleRepository.findAll();
         assertEquals("Wrong size", 1, rules.size());
         Category cat = rules.get(0).getCategory();
         assertEquals("Wrong category title.", "Car", cat.getTitle());
         assertEquals("Wrong rule string.", "test", rules.get(0).getRuleString());
     }
-    
-	@Test
+
+    @Test
     @InSequence(3)
     public void lookupByIdTest() throws Exception {
         Rule rule = ruleRepository.findById(1L);
         assertEquals("Wrong rule string.", "test", rule.getRuleString());
     }
-	
+
     @Test
     @InSequence(4)
     public void lookupByNonExistIdTest() throws Exception {
         ruleRepository.findById(20L);
     }
-    
+
     @Test
     @InSequence(5)
     public void updateCategoryTest() throws Exception {
-    	User user = new User();
-    	user.setId(1L);
-    	user.setName("Peter");
-    	user.setForname("Nash");
-    	
-    	Category cat = new Category();
-    	cat.setId(1L);
-    	cat.setUser(user);
-    	cat.setTitle("Travel");
-    	
+        User user = new User();
+        user.setId(1L);
+        user.setName("Peter");
+        user.setForname("Nash");
+
+        Category cat = new Category();
+        cat.setId(1L);
+        cat.setUser(user);
+        cat.setTitle("Travel");
+
         Rule rule = new Rule();
         rule.setId(2L);
         rule.setUser(user);
@@ -125,11 +126,11 @@ public class RuleRepositoryTest {
         Rule updated = ruleRepository.update(rule);
         assertEquals("Wrong rule string.", "updated", updated.getRuleString());
     }
-    
+
     @Test
     @InSequence(6)
     public void deleteByIdTest() {
-        
+
         ruleRepository.deleteById(1L);
     }
 
@@ -141,46 +142,45 @@ public class RuleRepositoryTest {
 
     @Test
     @InSequence(8)
-    public void findRulePerPayment(){
-    	User user = prepareDb();
-    	
-	    Payment payment = new Payment();
-	    payment.setAmount(new BigDecimal(10));
-	    payment.setBank(null);
-	    payment.setAdditionalInfo("Info1");
-	    payment.setPaymentDate(new Date());
-	    payment.setUser(user);
-	
-	    
-	    Category foundCategory = ruleRepository.findCategory(payment);        
-	    assertNotNull("Found category is null.", foundCategory);
-	    payment.setCategory(foundCategory);
-	    paymentRepository.create(payment);
-	
-	    Payment paymentFromDb = paymentRepository.findById(payment.getId());
-	    assertNotNull("Found category is null.", paymentFromDb.getCategory());
-	    assertEquals("Bad category", "Car", paymentFromDb.getCategory().getTitle());
-	
-	    payment = new Payment();
-	    payment.setAmount(new BigDecimal(23));
-	    payment.setBank(null);
-	    payment.setAdditionalInfo("cinema, Mad Max");
-	    payment.setPaymentDate(new Date());
-	    payment.setUser(user);
-	
-	    payment.setCategory(ruleRepository.findCategory(payment));
-	    paymentRepository.create(payment);
-	
-	    paymentFromDb = paymentRepository.findById(payment.getId());
-	    assertEquals("Bad category", "Entertainment", paymentFromDb.getCategory().getTitle());
+    public void findRulePerPayment() {
+        User user = prepareDb();
+
+        Payment payment = new Payment();
+        payment.setAmount(new BigDecimal(10));
+        payment.setBank(null);
+        payment.setAdditionalInfo("omv, Botanicka 43");
+        payment.setPaymentDate(new Date());
+        payment.setUser(user);
+
+//	    Category foundCategory = ruleRepository.findCategory(payment);        
+//	    assertNotNull("Found category is null.", foundCategory);
+//	    payment.setCategory(foundCategory);
+        paymentRepository.create(payment);
+
+        Payment paymentFromDb = paymentRepository.findById(payment.getId());
+        assertNotNull("Found category is null.", paymentFromDb.getCategory());
+        assertEquals("Bad category", "Car", paymentFromDb.getCategory().getTitle());
+
+        payment = new Payment();
+        payment.setAmount(new BigDecimal(23));
+        payment.setBank(null);
+        payment.setAdditionalInfo("cinema, Mad Max");
+        payment.setPaymentDate(new Date());
+        payment.setUser(user);
+
+//	    payment.setCategory(ruleRepository.findCategory(payment));
+        paymentRepository.create(payment);
+
+        paymentFromDb = paymentRepository.findById(payment.getId());
+        assertEquals("Bad category", "Entertainment", paymentFromDb.getCategory().getTitle());
     }
 
-	private User prepareDb() {
-		User user = new User();
+    private User prepareDb() {
+        User user = new User();
         user.setForname("forname");
         user.setName("name");
         userRepository.create(user);
-        
+
         Category categoryCar = new Category();
         categoryCar.setTitle("Car");
         categoryRepository.create(categoryCar);
@@ -207,29 +207,31 @@ public class RuleRepositoryTest {
         ruleFalse.setUser(user);
         ruleFalse.setRuleString("travel");
         ruleRepository.create(ruleFalse);
-		return user;
-	}
-    
+        return user;
+    }
+
     @Test(expected = Exception.class)
     @InSequence(9)
-    public void findRuleWithNullUserTestNullPointerException() throws Exception{
+    public void findRuleWithNullUserTestNullPointerException() throws Exception {
         Payment payment = new Payment();
         payment.setAmount(new BigDecimal(10));
         payment.setBank(null);
         payment.setAdditionalInfo("Info1");
         payment.setPaymentDate(new Date());
 
-        payment.setCategory(ruleRepository.findCategory(payment));
+        paymentRepository.create(payment);
+
+        //payment.setCategory(ruleRepository.findCategory(payment));
     }
-    
+
     @Test
     @InSequence(10)
     public void findRuleNoRuleForPayment() {
-    	User user = new User();
+        User user = new User();
         user.setForname("forname");
         user.setName("name");
         userRepository.create(user);
-        
+
         Payment payment = new Payment();
         payment.setAmount(new BigDecimal(10));
         payment.setBank(null);
