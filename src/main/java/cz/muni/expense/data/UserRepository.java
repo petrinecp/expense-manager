@@ -6,14 +6,13 @@
 package cz.muni.expense.data;
 
 import javax.ejb.Stateless;
-
-import cz.muni.expense.model.Category;
-import cz.muni.expense.model.User;
-import cz.muni.expense.model.User_;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import cz.muni.expense.model.User;
+import cz.muni.expense.model.User_;
 /**
  *
  * @author Lukáš Valach
@@ -33,8 +32,12 @@ public class UserRepository extends GenericRepository<User> {
         // feature in JPA 2.0
         //criteria.select(member).where(cb.equal(member.get(Member_.name), email));
         criteria.select(user).where(cb.equal(user.get(User_.username), username));
-        User userToReturn = em.createQuery(criteria).getSingleResult();
-        return userToReturn.getPasswd().equals(password) ? userToReturn : null;
+        try{
+        	User userToReturn = em.createQuery(criteria).getSingleResult();
+        	return userToReturn.getPasswd().equals(password) ? userToReturn : null;
+        } catch (NoResultException ex){
+        	return null;
+        }
     }
 
     public User findByUsernameAndAuthToken(String authId, String authToken) {
@@ -42,8 +45,12 @@ public class UserRepository extends GenericRepository<User> {
         CriteriaQuery<User> criteria = cb.createQuery(User.class);
         Root<User> user = criteria.from(User.class);
         criteria.select(user).where(cb.equal(user.get(User_.username), authId));
-        User userToReturn = em.createQuery(criteria).getSingleResult();
-        return userToReturn.getAuthToken().equals(authToken) ? userToReturn : null;
+        try{
+        	User userToReturn = em.createQuery(criteria).getSingleResult();
+        	return userToReturn.getAuthToken().equals(authToken) ? userToReturn : null;
+        } catch (NoResultException ex){
+        	return null;
+        }
     }
     	
 }
