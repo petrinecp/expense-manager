@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public abstract class BaseEntity<ID> implements Serializable {
  
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
  
     public ID getId() {
