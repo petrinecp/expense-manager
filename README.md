@@ -1,7 +1,9 @@
 # Configuration
-
-import configuration:
-$JBOSS_HOME/bin/jboss-cli.sh --connect --file=conf.cli
+1. Download MySQL jdbc driver
+http://dev.mysql.com/downloads/connector/j/
+2. Fill out variables.sh
+3. Start Wildfly by running bin/standalone.sh
+4. Execute setup.sh
 
 # Project Overview
 ### Entity-Relationship Diagram
