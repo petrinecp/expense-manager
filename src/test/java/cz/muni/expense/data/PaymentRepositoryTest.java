@@ -35,7 +35,9 @@ public class PaymentRepositoryTest {
 	@Deployment
     public static Archive<?> createTestArchive() {
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, "cz.muni.expense")
+                .addPackages(true, "cz.muni.expense")
+                .addPackages(true, "org.apache.commons.lang3")
+                .addPackages(true, "org.codehaus.jackson")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -54,24 +56,36 @@ public class PaymentRepositoryTest {
 			repository.deleteById(p.getId());
 		}
 		
+		User user = new User();
+		user.setId(1L);
+		
+		Bank bank = new Bank();
+		bank.setId(1L);
+		
 		defaultPayment = new Payment();
 		defaultPayment.setAmount(new BigDecimal(900));
-		defaultPayment.setBank(null);
+		defaultPayment.setBank(bank);
 		defaultPayment.setAdditionalInfo("Info1a");
 		defaultPayment.setPaymentDate(new Date());
-		defaultPayment.setUser(null);
+		defaultPayment.setUser(user);
 		
 		repository.create(defaultPayment);
 	}
 	
 	@Test
 	public void createPaymentTest(){
+		User user = new User();
+		user.setId(1L);
+		
+		Bank bank = new Bank();
+		bank.setId(1L);
+		
 		Payment payment = new Payment();
 		payment.setAmount(new BigDecimal(10));
-		payment.setBank(null);
+		payment.setBank(bank);
 		payment.setAdditionalInfo("Info1");
 		payment.setPaymentDate(new Date());
-		payment.setUser(null);
+		payment.setUser(user);
 		
 		repository.create(payment);
 		

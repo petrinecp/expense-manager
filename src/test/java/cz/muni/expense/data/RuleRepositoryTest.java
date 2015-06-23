@@ -36,6 +36,7 @@ public class RuleRepositoryTest {
 
     @Deployment
     public static Archive<?> createTestArchive() {
+
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, "cz.muni.expense")
                 .addPackages(true, "org.apache.commons.lang3")
