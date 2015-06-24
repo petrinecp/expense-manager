@@ -1,5 +1,6 @@
 insert into Users (name, forname, username, passwd, authRole) values ('John', 'Doe', 'admin', 'admin','ADMIN')
 insert into Users (name, forname, username, passwd, authRole, authToken) values ('test', 'test', 'test', 'test','ADMIN', 'test')
+insert into Users (name, forname, username, passwd, authRole, authToken) values ('user', 'user', 'user', 'user','BASIC_USER', 'user')
 
 
 insert into Categories (title) values ('Car')
