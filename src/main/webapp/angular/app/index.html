@@ -39,15 +39,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Expense Manager</a>
+                <span class="navbar-brand">Expense Manager</span>
             </div>
             <div class="collapse navbar-collapse" collapse="navbarCollapsed">
                 <ul class="nav navbar-nav" ng-show="loggedIn">
 <!--                     <li ng-class="{active: $state.includes('items')}"><a ui-sref="items">Items(jen k inspiraci)</a></li> -->
                     <li ng-class="{active: $state.includes('users')}" ng-show="authFactory.isAdmin()"><a ui-sref="users">Users</a></li>
                     <li ng-class="{active: $state.includes('categories')}"><a ui-sref="categories">Categories</a></li>
-                    <li ng-class="{active: $state.includes('rules')}"><a ui-sref="rules">Rules</a></li>
-                    <li ng-class="{active: $state.includes('payments')}"><a ui-sref="payments">Payments</a></li>
+                    <li ng-class="{active: $state.includes('rules')}" ng-hide="authFactory.isAdmin()><a ui-sref="rules">Rules</a></li>
+                    <li ng-class="{active: $state.includes('payments')}" ng-hide="authFactory.isAdmin()><a ui-sref="payments">Payments</a></li>
                     <li ng-show="!navbarCollapsed"><a ui-sref="overlay">My Profile</a></li>
                     <li ng-show="!navbarCollapsed"><a href ng-click="logout()">Logout</a></li>
                 </ul>
@@ -76,6 +76,7 @@
     <script src="libs/angular/ng-file-upload-shim.min.js"></script> 
     <script src="libs/angular/ng-file-upload.min.js"></script>
     <script src="libs/vis/vis.min.js"></script>
+    <script src="libs/angular/angular-websocket.min.js"></script>
     
     
     <script src="modules/app/app.js"></script>
