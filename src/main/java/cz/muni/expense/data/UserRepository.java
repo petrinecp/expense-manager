@@ -13,30 +13,31 @@ import javax.persistence.criteria.Root;
 
 import cz.muni.expense.model.User;
 import cz.muni.expense.model.User_;
+
 /**
  *
  * @author Lukáš Valach
  */
-@Stateless	
+@Stateless
 public class UserRepository extends GenericRepository<User> {
 
     public UserRepository() {
         super(User.class);
     }
-    
+
     public User findByUsername(String username) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = cb.createQuery(User.class);
         Root<User> user = criteria.from(User.class);
         criteria.select(user).where(cb.equal(user.get(User_.username), username));
-        try{
-        	return em.createQuery(criteria).getSingleResult();
-        } catch (NoResultException ex){
-        	return null;
+        try {
+            return em.createQuery(criteria).getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
         }
     }
-    
-    public User findByUsernameAndPassword(String username, String password){
+
+    public User findByUsernameAndPassword(String username, String password) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = cb.createQuery(User.class);
         Root<User> user = criteria.from(User.class);
@@ -44,11 +45,12 @@ public class UserRepository extends GenericRepository<User> {
         // feature in JPA 2.0
         //criteria.select(member).where(cb.equal(member.get(Member_.name), email));
         criteria.select(user).where(cb.equal(user.get(User_.username), username));
-        try{
-        	User userToReturn = em.createQuery(criteria).getSingleResult();
-        	return userToReturn.getPasswd().equals(password) ? userToReturn : null;
-        } catch (NoResultException ex){
-        	return null;
+        try {
+            User userToReturn = em.createQuery(criteria).getSingleResult();
+            String hash = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+            return userToReturn.getPasswdHash().equals(hash) ? userToReturn : null;
+        } catch (NoResultException ex) {
+            return null;
         }
     }
 
@@ -57,12 +59,12 @@ public class UserRepository extends GenericRepository<User> {
         CriteriaQuery<User> criteria = cb.createQuery(User.class);
         Root<User> user = criteria.from(User.class);
         criteria.select(user).where(cb.equal(user.get(User_.username), authId));
-        try{
-        	User userToReturn = em.createQuery(criteria).getSingleResult();
-        	return userToReturn.getAuthToken().equals(authToken) ? userToReturn : null;
-        } catch (NoResultException ex){
-        	return null;
+        try {
+            User userToReturn = em.createQuery(criteria).getSingleResult();
+            return userToReturn.getAuthToken().equals(authToken) ? userToReturn : null;
+        } catch (NoResultException ex) {
+            return null;
         }
     }
-    	
+
 }
