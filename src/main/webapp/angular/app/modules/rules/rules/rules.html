@@ -1,0 +1,53 @@
+<div class="row rules" ng-controller="rules">
+    <div class="col-md-4 col-md-push-8">
+        <div ui-view="sidebar">
+            <div class="filters">
+                <h1>Filters</h1>
+                <!-- h4>Roles</h4>
+                <p>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role==''}" ng-click="filter('role', '')">All</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='admin'}" ng-click="filter('role', 'admin')">Admin</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='user'}" ng-click="filter('role', 'user')">User</a>
+                </p-->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-pull-4">
+        <div class="row title">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <h1>Rules</h1>
+            </div>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              	<div class="pull-right">
+                	<a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a>
+                	<a class="btn btn-primary" ui-sref="rules.new"><span class="glyphicon glyphicon-plus"></span>New rule</a> 
+				</div>
+              </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="text" class="form-control" ng-model="filters.$" placeholder="Search" ng-change="currentPage=1" />
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                	<th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Id</a></th>
+                    <th class="col-md-6"><a href="" ng-click="predicate='ruleString';reverse=!reverse">Rule</a></th>
+                    <th class="col-md-4"><a href="" ng-click="predicate='category';reverse=!reverse">Category</a></th>
+                    <th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Detail</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rule in filtered = (data.rule | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==rule.id}">
+                    <td>{{ rule.id || 'None' }}</td>
+                    <td>{{ rule.ruleString || 'None' }}</td>
+                    <td>{{ rule.category.title || 'None' }}</td>
+                    <td><a ui-sref="rules.view({id:rule.id})">Detail</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Total items: {{ filtered.length }} </p>
+        <p>All items: {{ data }} </p>
+        <p>Filtered items: {{ filtered }} </p>  
+        <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
+    </div>
+</div>

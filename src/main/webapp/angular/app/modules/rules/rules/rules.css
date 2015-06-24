@@ -1,0 +1,25 @@
+/**
+ * rules
+ * @class rules
+ */
+
+.rules {
+
+}
+
+.rules .title h1 {
+    display: inline-block;
+}
+
+.rules .title .btn,
+.rules .title .form-control {
+    margin-top: 25px;
+}
+
+.rules .filters .active {
+    color: #000;
+}
+
+.rules .filters .btn {
+    margin-bottom: 5px;
+}

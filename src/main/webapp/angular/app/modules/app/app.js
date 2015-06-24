@@ -18,6 +18,9 @@ var app = angular.module('app', [
     'categories',
     'category',
     'category-new',
+    'rules',
+    'rule',
+    'rule-new',
     'payments',
     'payment',
     'payment-new'

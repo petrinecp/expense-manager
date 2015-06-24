@@ -1,0 +1,45 @@
+<div class="rule">
+    <button type="button" class="close" ui-sref="rules"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h1>Rules</h1>
+    <tabset justified="false">
+        <tab heading="Details">
+            <h3>Details</h3>
+            <div class="view" ng-show="!editable">
+                <dl>
+                	<dt>Id</dt>
+                    <dd>{{ rule.id || 'None' }}</dd>
+                    <dt>Rule</dt>
+                    <dd>{{ rule.ruleString || 'None' }}</dd>
+                    <dt>Category</dt>
+                    <dd>{{ rule.category.title || 'None' }}</dd>
+                    <dt>User</dt>
+                    <dd>{{ rule.user.username || 'None' }}</dd>
+                </dl>
+            </div>
+            <form role="form" ng-show="editable">
+                <fieldset ng-disabled="isDisabled">
+                	<div class="form-group">
+                        <dt>Id</dt>
+                    	<dd>{{ rule.id || 'None' }}</dd>
+                    </div>
+                    <div class="form-group">
+                        <label for="ruleString">Rule</label>
+                        <input type="text" class="form-control" id="ruleString" ng-model="rule.ruleString" />
+                    </div>
+                    <div class="form-group">
+                        <label for="selectCategory">Category</label>
+                        <select id="selectCategory" class="form-control" ng-options="category as category.title for category in data.category" ng-model="rule.category">
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
+        </tab>
+    </tabset>
+<!--     <p>errorMessages: {{data.errorMessages}}</p> -->
+<!--     <p>fieldErrors:  {{data.fieldErrors}}</p> -->
+    <div class="controls">
+    	<button type="button" class="btn btn-primary" ng-click="edit()" ng-show="!editable && isMyRule(rule)">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="remove()" ng-show="!editable && isMyRule(rule)">Delete</button>
+        <button type="submit" class="btn btn-success" ng-click="save()" ng-show="editable">Save</button>
+    </div>
+</div>

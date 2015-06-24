@@ -13,7 +13,6 @@ angular.module('payment', [
         
         $scope.data = GeneralRestService;
         $scope.editable = false;
-        $scope.num = false;
         
 		$scope.data.query({section : 'bank'}, function (data) {
 			$scope.setDefaultBank();

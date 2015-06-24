@@ -1,0 +1,38 @@
+/**
+ * rule
+ * @class rule styling
+ */
+
+.rule {
+
+}
+
+.rule img {
+    max-width: 100%;
+}
+
+.rule .nav-tabs a {
+    cursor: pointer;
+}
+
+.rule .section {
+    clear: both;
+}
+
+.rule timecode {
+    margin: 0 1% 10px 0;
+    width: 48%;
+    float: left;
+}
+
+.rule timecode input,
+.rule timecode .divider {
+    display: inline-block;
+    width: 22%;
+    text-align: center;
+    border: none;
+}
+
+.rule timecode .divider {
+    width: 3%;
+}

@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="modules/category/category-new/category-new.css" />
     <link rel="stylesheet" href="modules/category/categories/categories.css" />
     
+    <link rel="stylesheet" href="modules/rule/rule/rule.css" />
+    <link rel="stylesheet" href="modules/rule/rule-new/rule-new.css" />
+    <link rel="stylesheet" href="modules/rule/rules/rules.css" />
+    
     <link rel="stylesheet" href="modules/payment/payment/payment.css" />
     <link rel="stylesheet" href="modules/payment/payment-new/payment-new.css" />
     <link rel="stylesheet" href="modules/payment/payments/payments.css" />
@@ -42,6 +46,7 @@
 <!--                     <li ng-class="{active: $state.includes('items')}"><a ui-sref="items">Items(jen k inspiraci)</a></li> -->
                     <li ng-class="{active: $state.includes('users')}" ng-show="authFactory.isAdmin()"><a ui-sref="users">Users</a></li>
                     <li ng-class="{active: $state.includes('categories')}"><a ui-sref="categories">Categories</a></li>
+                    <li ng-class="{active: $state.includes('rules')}"><a ui-sref="rules">Rules</a></li>
                     <li ng-class="{active: $state.includes('payments')}"><a ui-sref="payments">Payments</a></li>
                     <li ng-show="!navbarCollapsed"><a ui-sref="overlay">My Profile</a></li>
                     <li ng-show="!navbarCollapsed"><a href ng-click="logout()">Logout</a></li>
@@ -86,6 +91,10 @@
     <script src="modules/category/category/category.js"></script>
     <script src="modules/category/categories/categories.js"></script>
     <script src="modules/category/category-new/category-new.js"></script>
+    
+    <script src="modules/rule/rule/rule.js"></script>
+    <script src="modules/rule/rules/rules.js"></script>
+    <script src="modules/rule/rule-new/rule-new.js"></script>
     
     <script src="modules/payment/payment/payment.js"></script>
     <script src="modules/payment/payments/payments.js"></script>
