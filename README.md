@@ -10,12 +10,13 @@ http://wildfly.org/downloads/
 1. Download MySQL jdbc driver
 http://dev.mysql.com/downloads/connector/j/
 2. Fill out variables.sh
-3. Start Wildfly by running bin/standalone.sh --server-config=standalone.xml
+3. Start Wildfly by running `bin/standalone.sh --server-config=standalone.xml`
 4. Execute setup.sh
 5. Build with `mvn clean install`
 5. Execute deploy.sh
-6. Restart wildfly (start with the same configuration file)
-6. Visit https://localhost:8443/expense-manager/
+6. Restart Wildfly (start with the same configuration file)
+6. Visit
+https://localhost:8443/expense-manager/
 
 # Demo
 https://expensemanager-supercool.rhcloud.com/
