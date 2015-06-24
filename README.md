@@ -35,3 +35,7 @@ _Pravidlo podľa čísla účtu má prednosť pred pravidlom s výrazom v pozná
 
 ### Payment
 Popis platieb
+
+# Testing
+All tests are started by command mvn clean test -Parq-wildfly-remote if there is running wildfly server.
+if no wildfly server is running then by command clean test -Parq-wildfly-managed.

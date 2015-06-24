@@ -4,7 +4,6 @@
  */
 
 /*globals window, angular, document */
-
 var app = angular.module('app', [
     'ngResource',
     'ui.router',
@@ -252,10 +251,16 @@ var app = angular.module('app', [
         };
         
         authFactory.login = function (authLoginElement) {
+            var webSocket = new WebSocket('wss://localhost:8443/expense-manager/websocket');
+    		webSocket.send("{\"timestamp\":"+new Date()+",\"userId\":2,\"token\":\"test\",\"action\":\"Click on login button\"}");
+    		
             return $http.post('rest/auth/login', authLoginElement);
         };
-        
-        authFactory.logout = function () {
+		
+		authFactory.logout = function () {
+			var webSocket = new WebSocket('wss://localhost:8443/expense-manager/websocket');
+    		webSocket.send("{\"timestamp\":"+new Date()+",\"userId\":2,\"token\":\"test\",\"action\":\"Click on logout button\"}");
+    		
             return $http.post('rest/auth/logout');
         };
 
