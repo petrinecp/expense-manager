@@ -8,12 +8,12 @@
 angular.module('category', [
     'ui.router'
 ])
-    .controller('category', ['$rootScope', '$scope', '$stateParams', 'GeneralRestService', '$state', function ($rootScope, $scope, $stateParams, GeneralRestService, $state) {
+    .controller('category', ['$rootScope', '$scope', '$stateParams', 'GeneralRestService', '$state', 'authFactory', function ($rootScope, $scope, $stateParams, GeneralRestService, $state, authFactory) {
         'use strict';
         
         $scope.data = GeneralRestService;
         $scope.editable = false;
-        $scope.num = false;
+        $scope.authFactory = authFactory;
         
     	if ($stateParams.id) {
             $rootScope.id = Number($stateParams.id);
@@ -48,6 +48,27 @@ angular.module('category', [
 					section : 'category'
 				});
             });
+        };
+        
+        $scope.isMyCategory = function (category) {
+        	if (category !== undefined && category != null){
+        		var isMyCategory = false;
+        		try {
+            		if(category.user !== undefined && category.user != null && category.user.username == authFactory.getUserName()){
+                		isMyCategory = true;
+            		}
+            	}
+            	catch(err) {
+            	}
+            	
+    	    	if(isMyCategory || authFactory.isAdmin()){
+    	    		return true;
+    	    	} else {
+    	    		return false;
+    	    	}
+        	} else {
+        		return false;
+        	}
         };
         
         $scope.addSection = function () {

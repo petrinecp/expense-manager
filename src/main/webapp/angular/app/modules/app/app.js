@@ -201,6 +201,14 @@ var app = angular.module('app', [
         authFactory.getAuthData = function () {
             return this.authData;
         };
+        
+        authFactory.getUserName = function () {
+        	if (this.isAuthenticated()){
+        		return this.getAuthData().authId;
+        	} else {
+        		return null;
+        	}
+        };
 
         authFactory.isAuthenticated = function () {
             return !angular.isUndefined(this.getAuthData());
