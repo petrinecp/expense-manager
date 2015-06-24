@@ -94,13 +94,7 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
             for (Future<List<Payment>> payment : payments) {
                 for (Payment p : payment.get()) {
                     p.setBank(bank);
-                    //p.setUser(currentUser)
-                    
-//                    Uncommented when user authentication is implemented
-//                    Category category = ruleRepository.findCategory(p);
-//                    if (category != null) {
-//                        p.setCategory(category);
-//                    }
+                    setUser(p);
                     try {
                         repository.create(p);
                     } catch (Exception e) {
@@ -138,5 +132,10 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
         }
 
         return form;
+    }
+    
+    @Override
+    protected void setUser(Payment t){
+        t.setUser(getUser());
     }
 }

@@ -23,4 +23,9 @@ public class RuleResourceRESTService extends GenericRESTService<Rule>{
         RuleRepository repository = CDI.current().select(RuleRepository.class).get();
         this.setRepository(repository);
     }
+    
+    @Override
+    protected void setUser(Rule r){
+        r.setUser(getUser());
+    }
 }

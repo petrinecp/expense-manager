@@ -1,4 +1,7 @@
-insert into Users (name, forname, username, passwd) values ('John', 'Doe', 'admin', 'admin')
+insert into Users (name, forname, username, passwd, authRole) values ('John', 'Doe', 'admin', 'admin','ADMIN')
+insert into Users (name, forname, username, passwd, authRole, authToken) values ('test', 'test', 'test', 'test','ADMIN', 'test')
+
+
 insert into Categories (title) values ('Car')
 insert into Categories (title) values ('Travel')
 insert into Categories (title) values ('Food & Drink')

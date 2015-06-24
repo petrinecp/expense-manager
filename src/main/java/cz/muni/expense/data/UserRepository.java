@@ -24,6 +24,18 @@ public class UserRepository extends GenericRepository<User> {
         super(User.class);
     }
     
+    public User findByUsername(String username) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = cb.createQuery(User.class);
+        Root<User> user = criteria.from(User.class);
+        criteria.select(user).where(cb.equal(user.get(User_.username), username));
+        try{
+        	return em.createQuery(criteria).getSingleResult();
+        } catch (NoResultException ex){
+        	return null;
+        }
+    }
+    
     public User findByUsernameAndPassword(String username, String password){
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = cb.createQuery(User.class);

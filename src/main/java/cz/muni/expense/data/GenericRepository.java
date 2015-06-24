@@ -18,7 +18,7 @@ import cz.muni.expense.model.BaseEntity;
 public abstract class GenericRepository<T extends BaseEntity> {
     
     protected Class<T> entityClass;
-
+    
     @Inject
     protected EntityManager em;
 

@@ -5,6 +5,7 @@
  */
 package cz.muni.expense.rest;
 
+import cz.muni.expense.auth.AuthAccessElement;
 import java.net.URI;
 import java.util.List;
 
@@ -25,9 +26,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import cz.muni.expense.data.GenericRepository;
+import cz.muni.expense.data.UserRepository;
 import cz.muni.expense.enums.UserRole;
 import cz.muni.expense.model.BaseEntity;
+import cz.muni.expense.model.User;
+import cz.muni.expense.model.User_;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -39,6 +45,12 @@ public abstract class GenericRESTService<T extends BaseEntity>{
     @Context
     UriInfo uriInfo;
     
+    @Context
+    protected HttpServletRequest  req;
+    
+    @Inject
+    protected UserRepository userRepository;
+     
     protected GenericRepository<T> repository;
 
     protected void setRepository(GenericRepository<T> repository) {
@@ -67,6 +79,7 @@ public abstract class GenericRESTService<T extends BaseEntity>{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)  
     public Response create(T entity) {
+        setUser(entity);
         T e = repository.create(entity);
         URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
         return Response.created(createdUri).entity(e).build();
@@ -77,6 +90,7 @@ public abstract class GenericRESTService<T extends BaseEntity>{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)  
     public Response update(T entity) {
+        setUser(entity);
         T e = repository.update(entity);
         URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
         return Response.created(createdUri).entity(e).build();
@@ -101,5 +115,14 @@ public abstract class GenericRESTService<T extends BaseEntity>{
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+    
+    protected User getUser(){
+        String userName = req.getHeader(AuthAccessElement.PARAM_AUTH_ID);
+        System.out.println(userName);
+        return userRepository.findByUsername(userName);
+    }
+    
+    protected void setUser(T entity) {
     }
 }
