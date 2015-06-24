@@ -5,9 +5,10 @@
                 <h1>Filters</h1>
                 <h4>Roles</h4>
                 <p>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role==''}" ng-click="filter('role', '')">All</a>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='admin'}" ng-click="filter('role', 'admin')">Admin</a>
-                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.role=='user'}" ng-click="filter('role', 'user')">User</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.authRole==''}" ng-click="filter('authRole', '')">All</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.authRole=='ADMIN'}" ng-click="filter('authRole', 'ADMIN')">Admin</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.authRole=='PRIVILEGED_USER'}" ng-click="filter('authRole', 'PRIVILEGED_USER')">Privileged User</a>
+                    <a href="" class="btn btn-default" ng-class="{'btn-primary':filters.authRole=='BASIC_USER'}" ng-click="filter('authRole', 'BASIC_USER')">Basic user</a>
                 </p>
             </div>
         </div>
@@ -31,9 +32,12 @@
             <thead>
                 <tr>
                     <th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Id</a></th>
-                    <th class="col-md-5"><a href="" ng-click="predicate='name';reverse=!reverse">Name</a></th>
-                    <th class="col-md-3"><a href="" ng-click="predicate='forname';reverse=!reverse">Forname</a></th>
-                    <!-- th class="col-md-3"><a href="" ng-click="predicate='role';reverse=!reverse">Role</a></th-->
+                    <th class="col-md-2"><a href="" ng-click="predicate='name';reverse=!reverse">User name</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='username';reverse=!reverse">Login name</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='forname';reverse=!reverse">Forname</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='authRole';reverse=!reverse">Role</a></th>
+                    <th class="col-md-2"><a href="" ng-click="predicate='passwd';reverse=!reverse">Password</a></th>
+<!--                     <th class="col-md-1"><a href="" ng-click="predicate='authToken';reverse=!reverse">Auth. token</a></th> -->
 					<th class="col-md-1"><a href="" ng-click="predicate='title';reverse=!reverse">Detail</a></th>
                 </tr>
             </thead>
@@ -41,15 +45,19 @@
                 <tr ng-repeat="user in filtered = (data.user | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==user.id}">
                     <td>{{ user.id || 'None' }}</td>
                     <td><a ui-sref="users.view({id:user.id})">{{ user.name || 'None' }}</a></td>
-                    <td>{{ user.forname || 'None' }}</td>
-                    <!-- td>{{ user.role || 'None' }}</td-->
+                    <td>{{ user.username|| 'None' }}</td>
+                    <td>{{ user.forname  || 'None' }}</td>
+                    <td>{{ user.authRole || 'None' }}</td>
+                    <td>{{ user.passwd || 'None' }}</td>
+<!--                     <td>{{ user.authToken || 'None' }}</td> -->
 					<td><a ui-sref="users.view({id:user.id})">Detail</a></td>
                 </tr>
             </tbody>
         </table>
 <!--         <p>Total items: {{ filtered.length }} </p> -->
+<!--         <p>Filter: {{ filters }} </p> -->
 <!--         <p>Filtered items: {{ filtered }} </p> -->
 <!--         <p>All items: {{ data.user }} </p> -->
-        <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
+<!--         <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination> -->
     </div>
 </div>

@@ -8,12 +8,16 @@
                 <dl>
 					<dt>Id</dt>
                     <dd>{{ user.id || 'None' }}</dd>
-                    <dt>Name</dt>
+                    <dt>User name</dt>
                     <dd>{{ user.name || 'None' }}</dd>
+                    <dt>Login name</dt>
+                    <dd>{{ user.username || 'None' }}</dd>
                     <dt>Forname</dt>
                     <dd>{{ user.forname || 'None' }}</dd>
-                    <!-- dt>Role</dt>
-                    <dd>{{ user.role || 'None' }}</dd-->
+                    <dt>Role</dt>
+                    <dd>{{ user.authRole || 'None' }}</dd>
+                    <dt>Password</dt>
+                    <dd>{{ user.passwd || 'None' }}</dd>
                 </dl>
             </div>
             <form role="form" ng-show="editable">
@@ -23,17 +27,25 @@
                     	<dd>{{ user.id || 'None' }}</dd>
 					</div>
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">User name</label>
                         <input type="text" class="form-control" id="name" ng-model="user.name" />
+                    </div>
+                    <div class="form-group">
+                        <label for=""userName"">Login name</label>
+                        <input class="form-control" id="userName" ng-model="user.username"></input>
                     </div>
                     <div class="form-group">
                         <label for="forname">Forname</label>
                         <input class="form-control" id="forname" ng-model="user.forname"></input>
                     </div>
-                    <!-- div class="form-group">
+                    <div class="form-group">
                         <label for="role">Role</label>
-                        <input class="form-control" id="role" ng-model="user.role"></input>
-                    </div-->
+                        <input class="form-control" id="role" ng-model="user.authRole"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" id="password" ng-model="user.passwd"></input>
+                    </div>
                 </fieldset>
             </form>
         </tab>

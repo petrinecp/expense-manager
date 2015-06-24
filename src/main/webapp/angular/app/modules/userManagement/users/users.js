@@ -43,9 +43,12 @@ angular.module('users', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 					'use strict';
 
 					$scope.filters = {
-						name : '',
-						forname: '',
-						//role : ''
+//						id : '',	
+//						name : '',
+//						forname: '',
+//						userName: '',
+					    authRole : '',
+//					    passwd : ''
 					};
 
 					$scope.currentPage = 1;
