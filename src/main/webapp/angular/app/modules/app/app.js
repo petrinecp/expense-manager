@@ -48,6 +48,7 @@ var app = angular.module('app', [
         $scope.$state = $state;
         $scope.loggedIn = false;
         $scope.navbarCollapsed = true;
+        $scope.authFactory = authFactory;
         $scope.authLoginElement = {
         	"username": "",
         	"password": ""
@@ -203,6 +204,30 @@ var app = angular.module('app', [
 
         authFactory.isAuthenticated = function () {
             return !angular.isUndefined(this.getAuthData());
+        };
+        
+        authFactory.isAdmin = function () {
+        	if (this.isAuthenticated() && this.getAuthData().authPermission == 'ADMIN'){
+        		return true
+        	} else {
+        		return false
+        	}
+        };
+        
+        authFactory.isBasicUser = function () {
+        	if (this.isAuthenticated() && this.getAuthData().authPermission == 'BASIC_USER'){
+        		return true
+        	} else {
+        		return false
+        	}
+        };
+        
+        authFactory.isPrivilegedUser = function () {
+        	if (this.isAuthenticated() && this.getAuthData().authPermission == 'PRIVILEGED_USER'){
+        		return true
+        	} else {
+        		return false
+        	}
         };
         
         authFactory.login = function (authLoginElement) {
