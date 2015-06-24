@@ -8,6 +8,8 @@ log.txt
 /target/
 /.settings/
 .project
+.tern-project
+.classpath
 
 #Angular
 /src/main/webapp/angular/node/
@@ -23,3 +25,7 @@ log.txt
 #ignore thumbnails created by windows
 src/main/webapp/index.html
 Thumbs.db
+
+#JPA generated classes
+*_.java
+
