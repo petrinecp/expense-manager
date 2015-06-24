@@ -1,10 +1,12 @@
 # Configuration
 **Prerequisite**
+
 1. Installed MySQL Server
 2. Downloaded Wildfly 8.2.0.Final
 http://wildfly.org/downloads/
 
 **Setup**
+
 1. Download MySQL jdbc driver
 http://dev.mysql.com/downloads/connector/j/
 2. Fill out variables.sh
