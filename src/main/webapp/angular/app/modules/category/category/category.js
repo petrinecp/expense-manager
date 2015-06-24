@@ -14,6 +14,7 @@ angular.module('category', [
         $scope.data = GeneralRestService;
         $scope.editable = false;
         $scope.authFactory = authFactory;
+        $scope.data.errorMessages = [];
         
     	if ($stateParams.id) {
             $rootScope.id = Number($stateParams.id);
@@ -35,7 +36,10 @@ angular.module('category', [
                 $scope.data.query({
 					section : 'category'
 				});
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
         
         $scope.remove = function () {

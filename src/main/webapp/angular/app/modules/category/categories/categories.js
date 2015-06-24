@@ -41,13 +41,16 @@ angular.module('categories', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 		[ '$scope', '$stateParams', '$filter', 'GeneralRestService', '$log',
 				function($scope, $stateParams, $filter, GeneralRestService, $log) {
 					'use strict';
-
+					
+					$scope.data = GeneralRestService;
+					$scope.data.errorMessages = [];
+					
 					$scope.filters = {
 					};
 
 					$scope.currentPage = 1;
 					$scope.pageSize = 10;
-					$scope.data = GeneralRestService;
+					
 					
 					$scope.refresh = function() {
 						$scope.data.query({

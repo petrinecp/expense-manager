@@ -40,7 +40,10 @@ angular.module('payment', [
                 $scope.data.query({
 					section : 'payment'
 				});
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
         
         $scope.remove = function () {
@@ -52,7 +55,10 @@ angular.module('payment', [
                 $scope.data.query({
 					section : 'payment'
 				});
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
         
         $scope.addSection = function () {

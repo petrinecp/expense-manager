@@ -40,6 +40,11 @@
             </div>
         </div>
     </div>
+    <div class="alert alert-danger" role="alert" ng-repeat="fieldError in data.errorMessages">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{fieldError.field}} - {{fieldError.message}}
+    </div>
     <div class="container" ui-view="main">
     </div>
     <script src="libs/angular/angular.min.js"></script>

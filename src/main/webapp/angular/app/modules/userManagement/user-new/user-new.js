@@ -21,6 +21,8 @@ angular.module('user-new', [
                 $scope.isDisabled = false;
 				$scope.data.user.push(data);
                 $state.go('users');
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+			});
         };
     }]);

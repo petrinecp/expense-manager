@@ -44,7 +44,10 @@ angular.module('payment-new', [
                 $scope.isDisabled = false;
                 $scope.data.payment.push(data);
                 $state.go('payments');
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
         
         // Remember if datepicker is open
