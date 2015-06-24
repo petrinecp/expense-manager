@@ -12,6 +12,7 @@ angular.module('category-new', [
         'use strict';
         
         $scope.data = GeneralRestService;
+        $scope.data.errorMessages = [];
         $scope.accordianOpen1 = true;
         $scope.accordianOpen2 = false;
 
@@ -21,6 +22,8 @@ angular.module('category-new', [
                 $scope.isDisabled = false;
                 $scope.data.category.push(data);
                 $state.go('categories');
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+			});
         };
     }]);

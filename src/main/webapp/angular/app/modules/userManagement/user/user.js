@@ -35,7 +35,10 @@ angular.module('user', [
                 $scope.data.query({
 					section : 'user'
 				});
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
 
         $scope.remove = function () {
@@ -47,7 +50,10 @@ angular.module('user', [
                 $scope.data.query({
 					section : 'user'
 				});
-            });
+            }, function (data) {
+                $scope.isDisabled = false;
+                $scope.editable = true;
+			});
         };
         
         $scope.addSection = function () {
