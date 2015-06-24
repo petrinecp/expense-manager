@@ -62,5 +62,10 @@ public class CategoryResourceRESTService extends GenericRESTService<Category> {
     protected void setUser(Category t) {
         t.setUser(getUser());
     }
+    
+    @Override
+    protected boolean canEdit(Category entity){
+        return entity.getUser().equals(getUser());
+    }
 
 }

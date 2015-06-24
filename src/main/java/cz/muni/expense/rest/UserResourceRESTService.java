@@ -6,9 +6,11 @@ import javax.ws.rs.Path;
 
 import cz.muni.expense.data.CategoryRepository;
 import cz.muni.expense.data.UserRepository;
+import cz.muni.expense.enums.UserRole;
 import cz.muni.expense.model.Category;
 import cz.muni.expense.model.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
@@ -27,6 +29,7 @@ public class UserResourceRESTService extends GenericRESTService<User> {
             this.setRepository(repository);
     }
     
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @GET
     @Path("/{id:[0-9][0-9]*}/category")
     @Produces(MediaType.APPLICATION_JSON)

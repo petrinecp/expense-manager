@@ -40,30 +40,31 @@ import javax.servlet.http.HttpServletRequest;
  * @author Peter Petrinec
  * @param <T>
  */
-public abstract class GenericRESTService<T extends BaseEntity>{
+public abstract class GenericRESTService<T extends BaseEntity> {
 
     @Context
     UriInfo uriInfo;
-    
+
     @Context
-    protected HttpServletRequest  req;
-    
+    protected HttpServletRequest req;
+
     @Inject
     protected UserRepository userRepository;
-     
+
     protected GenericRepository<T> repository;
 
     protected void setRepository(GenericRepository<T> repository) {
         this.repository = repository;
     }
 
-    @RolesAllowed({UserRole.BASIC_USER,UserRole.ADMIN,UserRole.PRIVILEGED_USER})
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<T> listAll() {
         return repository.findAll();
     }
 
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,55 +75,69 @@ public abstract class GenericRESTService<T extends BaseEntity>{
         }
         return t;
     }
-    
+
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)  
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(T entity) {
         setUser(entity);
         T e = repository.create(entity);
         URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
         return Response.created(createdUri).entity(e).build();
     }
-    
+
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @POST
     @Path("/{id:[0-9][0-9]*}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)  
+    @Produces(MediaType.APPLICATION_JSON)
     public Response update(T entity) {
         setUser(entity);
+        if (!canEdit(entity)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         T e = repository.update(entity);
         URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
         return Response.created(createdUri).entity(e).build();
     }
-    
+
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
     @DELETE
     @Path("/{id:[0-9][0-9]*}")
     public Response deleteById(@PathParam("id") long id) {
         Response.ResponseBuilder builder = null;
-        
+
         T t = repository.findById(id);
         if (t == null) {
             builder = Response.status(Response.Status.BAD_REQUEST);
         } else {
-            repository.delete(t);
-            builder = Response.status(Response.Status.OK);
+            if (canEdit(t)) {
+                repository.delete(t);
+                builder = Response.status(Response.Status.OK);
+            } else {
+                builder = Response.status(Response.Status.FORBIDDEN);
+            }
         }
-        
+
         return builder.build();
     }
-    
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-    
-    protected User getUser(){
+
+    protected User getUser() {
         String userName = req.getHeader(AuthAccessElement.PARAM_AUTH_ID);
         System.out.println(userName);
         return userRepository.findByUsername(userName);
     }
-    
+
     protected void setUser(T entity) {
+    }
+
+    protected boolean canEdit(T entity) {
+        return true;
     }
 }

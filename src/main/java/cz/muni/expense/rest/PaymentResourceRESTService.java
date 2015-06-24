@@ -4,10 +4,12 @@ import cz.muni.expense.data.BankRepository;
 import cz.muni.expense.data.PaymentRepository;
 import cz.muni.expense.data.RuleRepository;
 import cz.muni.expense.enums.BankIdentifier;
+import cz.muni.expense.enums.UserRole;
 import cz.muni.expense.exception.ParserException;
 import cz.muni.expense.model.Bank;
 import cz.muni.expense.model.Category;
 import cz.muni.expense.model.Payment;
+import cz.muni.expense.model.Rule;
 import cz.muni.expense.parser.Parser;
 import cz.muni.expense.parser.ParserFactory;
 import cz.muni.expense.parser.PaymentUploadForm;
@@ -20,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.annotation.security.RunAs;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
@@ -65,6 +68,7 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
      * @param input Request is mapped into this parameter.
      * @return
      */
+    @RolesAllowed({UserRole.PRIVILEGED_USER})
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -137,5 +141,10 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
     @Override
     protected void setUser(Payment t){
         t.setUser(getUser());
+    }
+    
+    @Override
+    protected boolean canEdit(Payment entity){
+        return entity.getUser().equals(getUser());
     }
 }
