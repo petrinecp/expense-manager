@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.expense.model;
 
 import cz.muni.expense.enums.BankIdentifier;
@@ -10,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -19,6 +16,8 @@ import javax.persistence.Table;
 @Table(name = "Banks")
 public class Bank extends BaseEntity<Long> {
     
+    @NotNull
+    @Size(min = 1, max = 50)
     private String title;
     
     @Enumerated(EnumType.STRING)

@@ -2,7 +2,6 @@ package cz.muni.expense.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,7 +22,6 @@ public class Category extends BaseEntity<Long>{
     private String title;
     
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "userId")
     private User user;
 
     public String getTitle() {
