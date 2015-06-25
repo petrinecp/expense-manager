@@ -58,13 +58,31 @@ public class CategoryResourceRESTService extends GenericRESTService<Category> {
         return Response.created(createdUri).entity(e).build();
     }
 
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
+    @POST
+    @Path("/{id:[0-9][0-9]*}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(Category entity) {
+        if (!getUser().getAuthRole().equals(UserRole.ADMIN)) {
+            setUser(entity);
+            if (!canEdit(entity)) {
+                return Response.status(Response.Status.FORBIDDEN).build();
+            }
+        }
+
+        Category e = repository.update(entity);
+        URI createdUri = URI.create(uriInfo.getAbsolutePath() + e.getId().toString());
+        return Response.created(createdUri).entity(e).build();
+    }
+
     @Override
     protected void setUser(Category t) {
         t.setUser(getUser());
     }
-    
+
     @Override
-    protected boolean canEdit(Category entity){
+    protected boolean canEdit(Category entity) {
         return entity.getUser().equals(getUser());
     }
 
