@@ -10,6 +10,6 @@ insert into Categories (title) values ('Bills')
 insert into Categories (title) values ('Entertainment')
 insert into Categories (title) values ('Shopping')
 insert into Banks (title, identifier) values ('Československá obchodní banka', 'CSOB')
-insert into Rules (userId, categoryId, ruleString) values(3, 3, 'albert');
-insert into Rules (userId, categoryId, ruleString) values(3, 6, 'sportisimo');
-insert into Rules (userId, categoryId, ruleString) values(3, 5, 'vyplata');
+insert into Rules (user_id, category_id, ruleString) values(3, 3, 'albert')
+insert into Rules (user_id, category_id, ruleString) values(3, 6, 'sportisimo')
+insert into Rules (user_id, category_id, ruleString) values(3, 5, 'vyplata')
