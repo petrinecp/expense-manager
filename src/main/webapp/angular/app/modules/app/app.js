@@ -76,9 +76,11 @@ var app = angular.module('app', [
                 if ($rootScope.user.image === undefined || $rootScope.user.image == null){
                 	$rootScope.user.image = "img/blank.jpg";
                 }
+                $scope.data.errorMessages = [];
                 $state.go('payments');
             }).error(function () {
             	$scope.loggedIn = false;
+            	$scope.data.errorMessages = [{"field":"Login fail","message":"please check your name and password"}];
             	$state.go('app');
             });
         };
