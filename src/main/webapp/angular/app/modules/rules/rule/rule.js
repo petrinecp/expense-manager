@@ -47,6 +47,7 @@ angular.module('rule', [
         
         $scope.save = function () {
             $scope.isDisabled = true;
+            $scope.rule.user = null;
             $scope.data.update({section: 'rule', id: $rootScope.id}, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = false;

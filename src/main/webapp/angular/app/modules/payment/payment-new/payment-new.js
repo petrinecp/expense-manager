@@ -44,6 +44,7 @@ angular.module('payment-new', [
                 $scope.isDisabled = false;
                 $scope.data.payment.push(data);
                 $state.go('payments');
+                $scope.data.query({section : 'payment'});
             }, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = true;

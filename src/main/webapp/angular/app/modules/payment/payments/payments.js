@@ -44,7 +44,7 @@ angular.module('payments', [ 'ngResource', 'ui.bootstrap', 'ui.router' ])
 
 					$scope.filters = {
 							'bank': {
-								'title': ''
+								'identifier': ''
 							}
 					};
 

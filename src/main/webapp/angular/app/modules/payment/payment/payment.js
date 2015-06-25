@@ -32,6 +32,7 @@ angular.module('payment', [
         
         $scope.save = function () {
             $scope.isDisabled = true;
+            $scope.payment.user = null;
             $scope.data.update({section: 'payment', id: $rootScope.id}, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = false;

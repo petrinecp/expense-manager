@@ -29,6 +29,7 @@ angular.module('category', [
         
         $scope.save = function () {
             $scope.isDisabled = true;
+            $scope.category.user = null;
             $scope.data.update({section: 'category', id: $rootScope.id}, function (data) {
                 $scope.isDisabled = false;
                 $scope.editable = false;
