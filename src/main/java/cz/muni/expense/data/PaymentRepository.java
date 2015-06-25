@@ -34,6 +34,13 @@ public class PaymentRepository extends GenericRepository<Payment> {
         }
         return super.create(p);
     }
+    
+     public List<Payment> findPaymentsByUserId(Long userId) {
+        Query query = em.createQuery("SELECT p FROM Payment p "
+                + "WHERE p.user.id = :userId");
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
 
     private Category findCategory(Payment p) {
         if (p.getUser() == null) {

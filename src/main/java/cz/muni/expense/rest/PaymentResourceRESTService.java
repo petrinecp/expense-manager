@@ -10,6 +10,7 @@ import cz.muni.expense.model.Bank;
 import cz.muni.expense.model.Category;
 import cz.muni.expense.model.Payment;
 import cz.muni.expense.model.Rule;
+import cz.muni.expense.model.User;
 import cz.muni.expense.parser.Parser;
 import cz.muni.expense.parser.ParserFactory;
 import cz.muni.expense.parser.PaymentUploadForm;
@@ -28,8 +29,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -136,6 +139,15 @@ public class PaymentResourceRESTService extends GenericRESTService<Payment> {
         }
 
         return form;
+    }
+    
+    @RolesAllowed({UserRole.BASIC_USER, UserRole.ADMIN, UserRole.PRIVILEGED_USER})
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public List<Payment> listAll() {
+        User user = getUser();
+        return ((PaymentRepository) repository).findPaymentsByUserId(user.getId());
     }
     
     @Override

@@ -93,7 +93,9 @@ public abstract class GenericRESTService<T extends BaseEntity> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(T entity) {
+        System.out.println(entity);
         setUser(entity);
+        System.out.println(entity);
         if (!canEdit(entity)) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
