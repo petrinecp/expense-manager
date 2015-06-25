@@ -95,7 +95,7 @@ public class BankResourceRESTServiceTest extends BaseRestTestSuite {
     	Client client = createRestClient();
         WebTarget target = client.target("https://localhost:8443/test/rest/bank/20");
         Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
-        assertEquals(404, response.getStatus());
+        assertEquals(500, response.getStatus());
 
         response.close();
     }

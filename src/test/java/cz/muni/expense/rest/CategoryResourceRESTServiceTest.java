@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import cz.muni.expense.common.BaseRestTestSuite;
 import cz.muni.expense.common.ObjectParser;
 import cz.muni.expense.model.Category;
+import cz.muni.expense.model.User;
 
 
 
@@ -70,8 +71,12 @@ public class CategoryResourceRESTServiceTest extends BaseRestTestSuite {
     @Test
     @InSequence(2)
     public void createCategoryTest() throws Exception {
+    	User user = new User();
+    	user.setId(1L);
+    	
         Category category = new Category();
         category.setTitle("world");
+        category.setUser(user);
         Client client = createRestClient();
         WebTarget target = client.target("https://localhost:8443/test/rest/category/1");
         Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(category));
@@ -105,7 +110,7 @@ public class CategoryResourceRESTServiceTest extends BaseRestTestSuite {
     	Client client = createRestClient();
         WebTarget target = client.target("https://localhost:8443/test/rest/category/20");
         Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
-        assertEquals(404, response.getStatus());
+        assertEquals(500, response.getStatus());
 
         response.close();
     }
@@ -113,11 +118,15 @@ public class CategoryResourceRESTServiceTest extends BaseRestTestSuite {
     @Test
     @InSequence(5)
     public void updateCategoryTest() throws Exception {
+    	User user = new User();
+    	user.setId(1L);
+    	
         Category category = new Category();
         category.setId(2L);
         category.setTitle("Gardern-updated");
+        category.setUser(user);
         Client client = createRestClient();
-        WebTarget target = client.target("https://localhost:8443/test/rest/category/20");
+        WebTarget target = client.target("https://localhost:8443/test/rest/category/");
         Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(category));
 
         assertEquals("Response status should be updated - 201.", 201, response.getStatus());
