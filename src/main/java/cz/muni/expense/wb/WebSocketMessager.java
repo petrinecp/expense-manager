@@ -45,18 +45,20 @@ public class WebSocketMessager {
 		System.out.println("User input: " + message);
 		
 		WebSocketMessage wsm = getWebSocketMessageFromJson(message);
-		User user = userRepository.findById(wsm.getUserId());
+		User user = userRepository.findByUsername(wsm.getUserId());
 
-		boolean isAuthorized = authService.isAuthorized(user.getName(), wsm.getToken(), allowedRoles);		
-		if(isAuthorized){
+		boolean isAuthorized = authService.isAuthorized(wsm.getUserId(), wsm.getToken(), allowedRoles);		
+		if(isAuthorized && user != null){
 			Message msg = new Message();
 			msg.setTimestamp(wsm.getTimestamp());
 			msg.setUser(user);
 			msg.setAction(wsm.getAction());
 			messageRepository.create(msg);
+			System.out.println("Message saved");
 		} else {
-			System.out.println("not authorized");
+			System.out.println("Not authorized");
 		}
+		System.out.println("End of onMessage");
 	}
 
 	@OnOpen
