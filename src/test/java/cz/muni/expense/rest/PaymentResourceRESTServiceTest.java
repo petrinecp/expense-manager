@@ -3,6 +3,7 @@ package cz.muni.expense.rest;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import cz.muni.expense.common.BaseRestTestSuite;
 import cz.muni.expense.common.ObjectParser;
 import cz.muni.expense.enums.BankIdentifier;
 import cz.muni.expense.model.Bank;
@@ -37,7 +39,7 @@ import cz.muni.expense.model.User;
  *
  */
 @RunWith(Arquillian.class)
-public class PaymentResourceRESTServiceTest {
+public class PaymentResourceRESTServiceTest extends BaseRestTestSuite {
 	
 	private final ObjectParser<Payment> objectParser = new ObjectParser<Payment>(Payment.class);
 	
@@ -47,6 +49,7 @@ public class PaymentResourceRESTServiceTest {
                 .addPackages(true, "cz.muni.expense")
                 .addPackages(true, "org.apache.commons.lang3")
                 .addPackages(true, "org.codehaus.jackson")
+                .addPackages(true, "org.apache.http")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -76,9 +79,9 @@ public class PaymentResourceRESTServiceTest {
 		payment.setUser(user);
 		payment.setAdditionalInfo("infoForReceiver");
 		payment.setPaymentDate(new Date());
-		Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment");
-        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.json(payment));
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(payment));
         
         assertEquals("Response should be created.", 201, response.getStatus());
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
@@ -92,23 +95,23 @@ public class PaymentResourceRESTServiceTest {
 	@Test
 	@InSequence(2)
 	public void listAllPaymentsTest() throws Exception {
-		 Client client = ClientBuilder.newBuilder().build();
-	        WebTarget target = client.target("http://localhost:8080/test/rest/payment");
-	        Response response = target.request(MediaType.APPLICATION_JSON).get();
-	        assertEquals(200, response.getStatus());
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
+        assertEquals(200, response.getStatus());
 	        
-	        List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
-	        assertEquals("Database should contains one payment", 1, payments.size());
-	        
-	        response.close();
+        List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
+        assertEquals("Database should contains one payment", 1, payments.size());
+        
+        response.close();
 	}
 	
 	@Test
     @InSequence(3)
     public void lookupByIdTest() throws Exception {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment/1");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment/1");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
         assertEquals(200, response.getStatus());
 
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
@@ -121,9 +124,9 @@ public class PaymentResourceRESTServiceTest {
 	@Test
     @InSequence(4)
     public void lookupByNonExistIdTest() throws Exception {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment/20");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment/20");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
         assertEquals(404, response.getStatus());
 
         response.close();
@@ -140,9 +143,9 @@ public class PaymentResourceRESTServiceTest {
 		payment.setAdditionalInfo("updatedInfoForReceiver1");
 		payment.setPaymentDate(new Date());
 		
-		Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment/1");
-        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.json(payment));
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment/1");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(payment));
         
         List<Payment> payments = objectParser.getObjectFromJson(response.readEntity(String.class));
         assertEquals("Response status should be updated - 201.", 201, response.getStatus());
@@ -153,19 +156,19 @@ public class PaymentResourceRESTServiceTest {
     
 	@Test
     @InSequence(6)
-    public void deleteByIdTest() {		
+    public void deleteByIdTest() throws Exception {		
 		Payment payment = new Payment();
 		payment.setAmount(new BigDecimal(649));
 		payment.setBank(bank);
 		payment.setUser(user);
 		payment.setAdditionalInfo("infoForReceiver1");
 		payment.setPaymentDate(new Date());
-		Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment");
-        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.json(payment));
+		Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(payment));
         
         client = ClientBuilder.newBuilder().build();
-        target = client.target("http://localhost:8080/test/rest/category/2");
+        target = client.target("http://localhost:8080/test/rest/category/3");
         response = target.request().delete();
         assertEquals("Category should be deleted", 200, response.getStatus());
         
@@ -174,10 +177,10 @@ public class PaymentResourceRESTServiceTest {
 
     @Test
     @InSequence(7)
-    public void deleteByNonExistIdTest() {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/payment/20");
-        Response response = target.request().delete();
+    public void deleteByNonExistIdTest() throws Exception {
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/payment/20");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").delete();
         assertEquals("Category should not be deleted", 400, response.getStatus());
         response.close();
     }

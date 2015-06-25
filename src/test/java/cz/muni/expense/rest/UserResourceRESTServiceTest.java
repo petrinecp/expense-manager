@@ -21,6 +21,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import cz.muni.expense.common.BaseRestTestSuite;
 import cz.muni.expense.common.ObjectParser;
 import cz.muni.expense.model.User;
 
@@ -31,7 +32,7 @@ import cz.muni.expense.model.User;
  *
  */
 @RunWith(Arquillian.class)
-public class UserResourceRESTServiceTest {
+public class UserResourceRESTServiceTest extends BaseRestTestSuite {
 
 	private final ObjectParser<User> objectParser = new ObjectParser<User>(User.class);
 	
@@ -41,7 +42,9 @@ public class UserResourceRESTServiceTest {
                 .addPackages(true, "cz.muni.expense")
                 .addPackages(true, "org.apache.commons.lang3")
                 .addPackages(true, "org.codehaus.jackson")
+                .addPackages(true, "org.apache.http")
                 .addAsResource("META-INF/our-persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("META-INF/test-import.sql", "import.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
     }
@@ -50,11 +53,15 @@ public class UserResourceRESTServiceTest {
     @InSequence(1)
     public void createTest() throws Exception {
         User user = new User();
+        user.setAuthRole("ADMIN");
+        user.setAuthToken("test");
         user.setName("Adam");
         user.setForname("Eagel");
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user");
-        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.json(user));
+        user.setPasswd("teset");
+        user.setPasswdHash("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08");
+        Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(user));
 
         assertEquals("Response should be created.", 201, response.getStatus());
         List<User> users = objectParser.getObjectFromJson(response.readEntity(String.class));
@@ -70,15 +77,15 @@ public class UserResourceRESTServiceTest {
     @InSequence(2)
     public void listAllTest() throws Exception {
 
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
         assertEquals(200, response.getStatus());
 
         List<User> users = objectParser.getObjectFromJson(response.readEntity(String.class));
-        assertEquals("Database should contains two users.", 1, users.size());
+        assertEquals("Database should contains two users.", 2, users.size());
         assertEquals("Wrong user name", "Adam", users.get(0).getName());
-        assertEquals("Wrong user forname", "Eagel", users.get(0).getForname());      
+        assertEquals("Wrong user forname", "Eagel", users.get(1).getForname());      
 
         response.close();
     }
@@ -86,9 +93,9 @@ public class UserResourceRESTServiceTest {
     @Test
     @InSequence(3)
     public void lookupByIdTest() throws Exception {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user/1");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user/1");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
         assertEquals(200, response.getStatus());
 
         List<User> users = objectParser.getObjectFromJson(response.readEntity(String.class));
@@ -102,9 +109,9 @@ public class UserResourceRESTServiceTest {
     @Test
     @InSequence(4)
     public void lookupByNonExistIdTest() throws Exception {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user/20");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user/20");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").get();
         assertEquals(404, response.getStatus());
 
         response.close();
@@ -118,9 +125,9 @@ public class UserResourceRESTServiceTest {
         user.setName("Adamic");
         user.setForname("Eagel");
         
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user/1");
-        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.json(user));
+        Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user/1");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").post(Entity.json(user));
 
         assertEquals("Response status should be updated - 201.", 201, response.getStatus());
         List<User> users = objectParser.getObjectFromJson(response.readEntity(String.class));
@@ -134,19 +141,19 @@ public class UserResourceRESTServiceTest {
 
     @Test
     @InSequence(6)
-    public void deleteByIdTest() {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user/1");
-        Response response = target.request().delete();
+    public void deleteByIdTest() throws Exception {
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user/1");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").delete();
         assertEquals("Bank should be deleted", 200, response.getStatus());
     }
 
     @Test
     @InSequence(7)
-    public void deleteByNonExistIdTest() {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/test/rest/user/20");
-        Response response = target.request().delete();
+    public void deleteByNonExistIdTest() throws Exception {
+    	Client client = createRestClient();
+        WebTarget target = client.target("https://localhost:8443/test/rest/user/20");
+        Response response = target.request(MediaType.APPLICATION_JSON).header("auth-id", "test").header("auth-token", "test").delete();
         assertEquals("Bank should not be deleted", 400, response.getStatus());
     }
 }
