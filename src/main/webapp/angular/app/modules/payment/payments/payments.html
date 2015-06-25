@@ -11,7 +11,7 @@
                 </p>
             </div>
         </div>
-    </div>;
+    </div>
     <div class="col-md-8 col-md-pull-4">
         <div class="row title">
             <div class="col-md-4 col-sm-4 col-xs-12">
@@ -19,8 +19,8 @@
             </div>
             <div class="col-md-5 col-sm-5 col-xs-12">
               	<div class="pull-right">
-	                <a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a> 
-	                <a class="btn btn-primary" ui-sref="payments.new" href="#/payments/new"><span class="glyphicon glyphicon-plus"></span>New payment</a> 
+	                <a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> Refresh</a> 
+	                <a class="btn btn-primary" ui-sref="payments.new" href="#/payments/new"><span class="glyphicon glyphicon-plus"></span> New payment</a> 
 				</div>
               </div>
             <div class="col-md-3 col-sm-3 col-xs-12">
@@ -31,7 +31,8 @@
             <thead>
                 <tr>
                 	<th class="col-md-1"><a href="" ng-click="predicate='id';reverse=!reverse">Id</a></th>
-                    <th class="col-md-1"><a href="" ng-click="predicate='user';reverse=!reverse">User</a></th>
+<!--                     <th class="col-md-1"><a href="" ng-click="predicate='user';reverse=!reverse">User</a></th> -->
+                    <th class="col-md-1"><a href="" ng-click="predicate='category';reverse=!reverse">Category</a></th>
                     <th class="col-md-1"><a href="" ng-click="predicate='bank';reverse=!reverse">Bank</a></th>
                     <th class="col-md-2"><a href="" ng-click="predicate='paymentDate';reverse=!reverse">Payment date</a></th>
                     <th class="col-md-1"><a href="" ng-click="predicate='amount';reverse=!reverse">Amount</a></th>
@@ -42,7 +43,8 @@
             <tbody>
                 <tr ng-repeat="payment in filtered = (data.payment | filter:filters) | orderBy:predicate | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" ng-class="{info:id==payment.id}">
                     <td>{{ payment.id || 'None' }}</td>
-                    <td>{{ payment.user.name || 'None' }}</td>
+<!--                     <td>{{ payment.user.name || 'None' }}</td> -->
+                    <td>{{ payment.category.title || 'None' }}</td>
                     <td>{{ payment.bank.title || 'None' }}</td>
                     <td>{{ payment.paymentDate || 'None' }}</td>
                     <td>{{ payment.amount || 'None' }}</td>
@@ -64,6 +66,6 @@
             </div>
         </div>
         
-        <a ng-click="prepareData();prepareLabels()">RefreshChart</a>
+        <a ng-click="refreshPaymentsChart()">RefreshChart</a>
     </div>
 </div>

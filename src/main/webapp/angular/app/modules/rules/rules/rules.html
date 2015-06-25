@@ -19,8 +19,8 @@
             </div>
             <div class="col-md-5 col-sm-5 col-xs-12">
               	<div class="pull-right">
-                	<a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>Refresh</a>
-                	<a class="btn btn-primary" ui-sref="rules.new"><span class="glyphicon glyphicon-plus"></span>New rule</a> 
+                	<a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
+                	<a class="btn btn-primary" ui-sref="rules.new"><span class="glyphicon glyphicon-plus"></span> New rule</a> 
 				</div>
               </div>
             <div class="col-md-3 col-sm-3 col-xs-12">
@@ -45,9 +45,9 @@
                 </tr>
             </tbody>
         </table>
-        <p>Total items: {{ filtered.length }} </p>
-        <p>All items: {{ data }} </p>
-        <p>Filtered items: {{ filtered }} </p>  
+<!--         <p>Total items: {{ filtered.length }} </p> -->
+<!--         <p>All items: {{ data }} </p> -->
+<!--         <p>Filtered items: {{ filtered }} </p>   -->
         <pagination ng-model="currentPage" total-items="filtered.length" items-per-page="pageSize"></pagination>
     </div>
 </div>
